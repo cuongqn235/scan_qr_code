@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS scan (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      qrCodeData TEXT NOT NULL,
+      createdAt TEXT NOT NULL
+      );
