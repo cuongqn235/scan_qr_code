@@ -26,7 +26,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       await _appRepository.clearAllData();
     }
     emit(AppState(isFirstLaunch: isFirstLaunch));
-    add(AppEventEndOnboard());
+    // add(AppEventEndOnboard());
   }
 
   FutureOr<void> _endOnBoard(

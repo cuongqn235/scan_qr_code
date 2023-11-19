@@ -21,7 +21,7 @@ class App extends StatelessWidget {
         ),
         BlocProvider(
           lazy: false,
-          create: (context) => getIt.call<InitialCubit>(),
+          create: (context) => getIt<InitialCubit>(),
         ),
       ],
       child: const _MyApp(),

@@ -44,3 +44,5 @@ app.*.map.json
 /android/app/release
 lib/app/gen/**.gen.dart
 lib/app/inject_dependency/inject_dependency.config.dart
+*.g.dart 
+*.freezed.dart
