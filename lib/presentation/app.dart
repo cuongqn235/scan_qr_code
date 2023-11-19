@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scan_qr_code/app/inject_dependency/inject_dependency.dart';
+import 'package:scan_qr_code/app/theme/theme.dart';
 import 'package:scan_qr_code/presentation/bloc/app_bloc.dart';
-import 'package:scan_qr_code/presentation/feature/home/splash/splash.dart';
-import 'package:scan_qr_code/presentation/feature/home/ui/home_page.dart';
+import 'package:scan_qr_code/presentation/feature/splash/splash.dart';
+import 'package:scan_qr_code/presentation/feature/home/page/home_page.dart';
 import 'package:scan_qr_code/presentation/initial/initial_cubit.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -69,24 +71,27 @@ class __MyAppState extends State<_MyApp> {
           processIntital.complete();
         }
       },
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: BlocSelector<InitialCubit, InitialState, bool>(
-          selector: (state) {
-            return state.isFinish;
-          },
-          builder: (context, isFinish) {
-            if (!isFinish) {
-              return const SplashPage();
-            }
-            return const HomePage();
-          },
-        ),
-      ),
+      child: ScreenUtilInit(
+          designSize: const Size(375, 812),
+          builder: (context, child) {
+            return MaterialApp(
+              title: 'Flutter Demo',
+              debugShowCheckedModeBanner: false,
+              themeMode: ThemeMode.light,
+              theme: AppTheme.lightTheme(context),
+              home: BlocSelector<InitialCubit, InitialState, bool>(
+                selector: (state) {
+                  return state.isFinish;
+                },
+                builder: (context, isFinish) {
+                  if (!isFinish) {
+                    return const SplashPage();
+                  }
+                  return const HomePage();
+                },
+              ),
+            );
+          }),
     );
   }
 }
