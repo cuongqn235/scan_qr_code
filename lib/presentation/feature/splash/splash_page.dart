@@ -8,7 +8,7 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       body: SafeArea(
         top: false,
         bottom: false,
@@ -58,10 +58,21 @@ class __IconAnimationState extends State<_IconAnimation>
   Widget build(BuildContext context) {
     return ScaleTransition(
       scale: aniamtion,
-      child: Assets.icons.icLogo.image(
-        width: widget.iconSize,
-        height: widget.iconSize,
-      ),
+      child: () {
+        final brightness = MediaQuery.of(context).platformBrightness;
+        switch (brightness) {
+          case Brightness.dark:
+            return Assets.images.splashDark.image(
+              width: widget.iconSize,
+              height: widget.iconSize,
+            );
+          case Brightness.light:
+            return Assets.images.splashLight.image(
+              width: widget.iconSize,
+              height: widget.iconSize,
+            );
+        }
+      }(),
     );
   }
 }

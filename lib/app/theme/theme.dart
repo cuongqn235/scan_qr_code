@@ -14,31 +14,29 @@ class AppTheme {
 
   static ThemeData lightTheme(BuildContext context) {
     return ThemeData(
-        useMaterial3: true,
-        primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: colorWhite,
-        // fontFamily: FontFamily.nunitoSans,
-        colorScheme: appLightColorScheme,
-        inputDecorationTheme: inputDecorationTheme,
-        textTheme: customizeTextTheme(colorBlack),
-        dividerTheme: _customDividerThemeData,
-        floatingActionButtonTheme: FloatingActionButtonThemeData(
-          backgroundColor: appLightColorScheme.primary,
-          foregroundColor: colorWhite,
+      useMaterial3: true,
+      primarySwatch: Colors.blue,
+      scaffoldBackgroundColor: const Color(0xffFDB623),
+      // fontFamily: FontFamily.nunitoSans,
+      colorScheme: appLightColorScheme,
+      inputDecorationTheme: inputDecorationTheme,
+      textTheme: customizeTextTheme(const Color(0xffFDB623)),
+      dividerTheme: _customDividerThemeData,
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: appLightColorScheme.primary,
+        foregroundColor: colorWhite,
+      ),
+      appBarTheme: AppBarTheme(
+        centerTitle: true,
+        iconTheme: IconThemeData(
+          color: appLightColorScheme.primary,
         ),
-        appBarTheme: AppBarTheme(
-          centerTitle: true,
-          iconTheme: IconThemeData(
-            color: appLightColorScheme.primary,
-          ),
-          titleTextStyle: context.textTheme.titleLarge
-              ?.copyWith(color: appLightColorScheme.primary),
-          color: appLightColorScheme.surface,
-          elevation: 0,
-        ),
-        chipTheme: const ChipThemeData(
-          side: BorderSide.none,
-        ));
+        titleTextStyle: context.textTheme.titleLarge
+            ?.copyWith(color: appLightColorScheme.primary),
+        color: Colors.transparent,
+        elevation: 0,
+      ),
+    );
   }
 
   static ThemeData darkTheme(
@@ -48,10 +46,10 @@ class AppTheme {
         useMaterial3: true,
         primarySwatch: Colors.blue,
         // fontFamily: FontFamily.nunitoSans,
-        scaffoldBackgroundColor: const Color(0xff121212),
+        scaffoldBackgroundColor: const Color(0xff333333),
         colorScheme: appDarkColorScheme,
         inputDecorationTheme: inputDecorationTheme,
-        textTheme: customizeTextTheme(colorWhite),
+        textTheme: customizeTextTheme(const Color(0xff333333)),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: appDarkColorScheme.primary,
           foregroundColor: colorWhite,
@@ -63,7 +61,8 @@ class AppTheme {
           ),
           titleTextStyle: context.textTheme.titleLarge
               ?.copyWith(color: appDarkColorScheme.primary),
-          color: appDarkColorScheme.surface,
+          color: Colors.transparent,
+          elevation: 0,
         ));
   }
 }

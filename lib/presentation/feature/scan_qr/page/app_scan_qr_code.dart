@@ -229,101 +229,42 @@ class _AppScanQrCodePageState extends State<AppScanQrCodePage> {
             alignment: Alignment.center,
             child: isScannerInitialized
                 ? SafeArea(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Container(
-                            height: MediaQuery.of(context).size.height - 200.w,
-                            width: MediaQuery.of(context).size.width - 50.w,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Container(
-                                  clipBehavior: Clip.hardEdge,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16.r),
-                                  ),
-                                  child: MobileScanner(
-                                    controller: mobileScannerCtrl,
-                                    onDetect: (capture) {
-                                      final barcodes = capture.barcodes;
-                                      if (barcodes.isNotEmpty &&
-                                          !isScanSuccess &&
-                                          barcodes.first.rawValue != null) {
-                                        context.read<AppScanQrCodeBloc>().add(
-                                              CaptureScanQrcode(
-                                                barcodes.first.rawValue!,
-                                              ),
-                                            );
-                                        setState(() {
-                                          isScanSuccess = true;
-                                        });
-                                      }
-                                    },
-                                  ),
-                                ),
-                                Assets.icons.squareScanqr.svg(
-                                  width:
-                                      (MediaQuery.of(context).size.width - 50) /
-                                          2,
-                                  height:
-                                      (MediaQuery.of(context).size.width - 50) /
-                                          2,
-                                  colorFilter: const ColorFilter.mode(
-                                    colorWhite,
-                                    BlendMode.srcIn,
-                                  ),
-                                ),
-                              ],
-                            ),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.r),
                           ),
-                          // Visibility(
-                          //   visible: widget.isInputLink,
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.symmetric(
-                          //       horizontal: 24,
-                          //       vertical: 24,
-                          //     ),
-                          //     child: Row(
-                          //       children: [
-                          //         Expanded(
-                          //           child: AppTextFormField(
-                          //             controller: linkController,
-                          //             maxLines: 3,
-                          //             minLines: 1,
-                          //             decoration: const InputDecoration(
-                          //               labelText: 'Dán link tại đây',
-                          //               floatingLabelBehavior:
-                          //                   FloatingLabelBehavior.never,
-                          //               fillColor: colorWhite,
-                          //               filled: true,
-                          //             ),
-                          //           ),
-                          //         ),
-                          //         spaceW16,
-                          //         FilledButton(
-                          //           child: const Icon(Icons.paste),
-                          //           onPressed: () async {
-                          //             final cdata = await Clipboard.getData(
-                          //               Clipboard.kTextPlain,
-                          //             );
-                          //             linkController.text = cdata?.text ?? '';
-                          //             screenBloc.add(
-                          //               AppScanQrCodeEventPasteLink(
-                          //                 linkController.text,
-                          //               ),
-                          //             );
-                          //           },
-                          //         )
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ),
-                        ],
-                      ),
+                          child: MobileScanner(
+                            controller: mobileScannerCtrl,
+                            onDetect: (capture) {
+                              final barcodes = capture.barcodes;
+                              if (barcodes.isNotEmpty &&
+                                  !isScanSuccess &&
+                                  barcodes.first.rawValue != null) {
+                                context.read<AppScanQrCodeBloc>().add(
+                                      CaptureScanQrcode(
+                                        barcodes.first.rawValue!,
+                                      ),
+                                    );
+                                setState(() {
+                                  isScanSuccess = true;
+                                });
+                              }
+                            },
+                          ),
+                        ),
+                        Assets.icons.squareScanqr.svg(
+                          width: (MediaQuery.of(context).size.width - 50) / 2,
+                          height: (MediaQuery.of(context).size.width - 50) / 2,
+                          colorFilter: const ColorFilter.mode(
+                            colorWhite,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                      ],
                     ),
                   )
                 : const SizedBox(),

@@ -58,6 +58,7 @@ dependencies:
   freezed_annotation: ^2.4.1
   mobile_scanner: ^3.5.2
   permission_handler: ^11.0.1
+  flutter_native_splash: ^2.3.5
 
 dev_dependencies:
   injectable_generator:
@@ -132,3 +133,14 @@ flutter_launcher_icons:
   remove_alpha_ios: true
   image_path: "assets/icons/ic_logo.png"
   min_sdk_android: 21
+
+flutter_native_splash:
+  color: "#FDB623"
+  image: assets/images/splash_light.png
+  color_dark: "#121212"
+  image_dark: assets/images/splash_dark.png
+  android_12:
+    color: "#ffffff"
+    image: assets/images/splash_light.png
+    color_dark: "#333333"
+    image_dark: assets/images/splash_dark.png

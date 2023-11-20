@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scan_qr_code/app/inject_dependency/inject_dependency.dart';
 import 'package:scan_qr_code/app/theme/theme.dart';
 import 'package:scan_qr_code/presentation/bloc/app_bloc.dart';
-import 'package:scan_qr_code/presentation/feature/splash/splash.dart';
+import 'package:scan_qr_code/presentation/feature/splash/splash_page.dart';
 import 'package:scan_qr_code/presentation/feature/home/page/home_page.dart';
 import 'package:scan_qr_code/presentation/initial/initial_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -77,8 +77,9 @@ class __MyAppState extends State<_MyApp> {
             return MaterialApp(
               title: 'Flutter Demo',
               debugShowCheckedModeBanner: false,
-              themeMode: ThemeMode.light,
+              themeMode: ThemeMode.system,
               theme: AppTheme.lightTheme(context),
+              darkTheme: AppTheme.darkTheme(context),
               home: BlocSelector<InitialCubit, InitialState, bool>(
                 selector: (state) {
                   return state.isFinish;
