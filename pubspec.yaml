@@ -23,6 +23,7 @@ scripts:
    all: "rm -rf build && flutter clean && flutter pub get && dart run build_runner build --delete-conflicting-outputs && cd ios && pod deintegrate && pod install && cd .."
    gen: "dart run build_runner build --delete-conflicting-outputs"
    get: "flutter pub get"
+   setIcon: "flutter pub get && dart run flutter_launcher_icons"
 
 environment:
   sdk: '>=3.1.4 <4.0.0'
@@ -131,7 +132,7 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   remove_alpha_ios: true
-  image_path: "assets/icons/ic_logo.png"
+  image_path: "assets/icons/ic_logo.jpg"
   min_sdk_android: 21
 
 flutter_native_splash:
