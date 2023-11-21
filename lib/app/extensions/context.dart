@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scan_qr_code/app/component/modal_bottom_sheet/title_bottom_sheet_wrapper.dart';
+import 'package:scan_qr_code/app/router/app_navigator.dart';
 import 'package:scan_qr_code/app/theme/app_color_scheme.dart';
 // import 'package:home_for_us/v2/design/theme_ext.dart';
 
 extension UIContext on BuildContext {
+  AppNavigator get navigator => AppNavigatorImpl(this);
   ColorScheme get colorScheme => Theme.of(this).colorScheme;
   TextTheme get textTheme => Theme.of(this).textTheme;
   ThemeData get theme => Theme.of(this);

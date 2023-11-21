@@ -20,7 +20,7 @@ class AppTheme {
       // fontFamily: FontFamily.nunitoSans,
       colorScheme: appLightColorScheme,
       inputDecorationTheme: inputDecorationTheme,
-      textTheme: customizeTextTheme(const Color(0xffFDB623)),
+      textTheme: customizeTextTheme(colorBlack),
       dividerTheme: _customDividerThemeData,
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: appLightColorScheme.primary,
@@ -49,7 +49,7 @@ class AppTheme {
         scaffoldBackgroundColor: const Color(0xff333333),
         colorScheme: appDarkColorScheme,
         inputDecorationTheme: inputDecorationTheme,
-        textTheme: customizeTextTheme(const Color(0xff333333)),
+        textTheme: customizeTextTheme(colorWhite),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: appDarkColorScheme.primary,
           foregroundColor: colorWhite,

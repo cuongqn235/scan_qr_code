@@ -112,6 +112,7 @@ class AppSolidButton extends StatelessWidget {
     Duration? animationDuration,
     Color? color,
     Color? disabledColor,
+    Color? textColor,
     MaterialTapTargetSize? materialTapTargetSize,
     double? minWidth,
     bool enableFeedback = true,
@@ -228,14 +229,24 @@ class AppSolidButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primarColor = color ?? context.theme.primaryColor;
+    final primarColor = color ?? context.colorScheme.primary;
+
     return MaterialButton(
       onPressed: onPressed,
       onLongPress: onLongPress,
       onHighlightChanged: onHighlightChanged,
       mouseCursor: mouseCursor,
       textTheme: textTheme,
-      textColor: textColor,
+      textColor: () {
+        final brightness = MediaQuery.of(context).platformBrightness;
+
+        switch (brightness) {
+          case Brightness.dark:
+            return colorBlack;
+          case Brightness.light:
+            return colorWhite;
+        }
+      }(),
       disabledTextColor: disabledTextColor,
       color: enabled ? primarColor : primarColor.withOpacity(0.5),
       disabledColor:

@@ -1,12 +1,15 @@
 import 'dart:async';
 
+import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:scan_qr_code/app/inject_dependency/inject_dependency.dart';
+import 'package:scan_qr_code/app/router/app_router.dart';
+import 'package:scan_qr_code/app/router/app_routes.dart';
 import 'package:scan_qr_code/app/theme/theme.dart';
 import 'package:scan_qr_code/presentation/bloc/app_bloc.dart';
 import 'package:scan_qr_code/presentation/feature/splash/splash_page.dart';
-import 'package:scan_qr_code/presentation/feature/home/page/home_page.dart';
 import 'package:scan_qr_code/presentation/initial/initial_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -41,12 +44,28 @@ class _MyApp extends StatefulWidget {
 class __MyAppState extends State<_MyApp> {
   late final Completer processIntital;
   late final AppBloc appBloc;
+  late final GoRouter appRouter;
+  late final StreamController redirectController;
 
   @override
   void initState() {
     super.initState();
     appBloc = context.read<AppBloc>();
     processIntital = Completer();
+    redirectController = StreamController.broadcast();
+    appRouter = AppRouter.router(
+      redirectController,
+      redirect: (context, state) async {
+        try {
+          if (appBloc.state.isFirstLaunch == true) {
+            return AppRoutes.onBoard.path;
+          }
+          return AppRoutes.home.path;
+        } catch (e) {
+          return AppRoutes.onBoard.path;
+        }
+      },
+    );
     intitial();
   }
 
@@ -57,7 +76,7 @@ class __MyAppState extends State<_MyApp> {
       processIntital.future,
     ]).then((value) {
       if (mounted) {
-        appBloc.add(AppEventEndOnboard());
+        // appBloc.add(AppEventEndOnboard());
         context.read<InitialCubit>().end();
       }
     });
@@ -65,32 +84,48 @@ class __MyAppState extends State<_MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AppBloc, AppState>(
-      listener: (context, state) {
-        if (state.isFirstLaunch != null && !processIntital.isCompleted) {
-          processIntital.complete();
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AppBloc, AppState>(
+          listener: (context, state) {
+            if (state.isFirstLaunch != null && !processIntital.isCompleted) {
+              processIntital.complete();
+            }
+          },
+        ),
+        BlocListener<AppBloc, AppState>(
+          listenWhen: (previous, current) =>
+              previous.isFirstLaunch != current.isFirstLaunch,
+          listener: (context, state) {
+            redirectController.add(dartz.unit);
+          },
+        ),
+      ],
       child: ScreenUtilInit(
           designSize: const Size(375, 812),
           builder: (context, child) {
-            return MaterialApp(
+            return MaterialApp.router(
               title: 'Flutter Demo',
               debugShowCheckedModeBanner: false,
               themeMode: ThemeMode.system,
               theme: AppTheme.lightTheme(context),
               darkTheme: AppTheme.darkTheme(context),
-              home: BlocSelector<InitialCubit, InitialState, bool>(
-                selector: (state) {
-                  return state.isFinish;
-                },
-                builder: (context, isFinish) {
-                  if (!isFinish) {
+              routeInformationParser: appRouter.routeInformationParser,
+              routerDelegate: appRouter.routerDelegate,
+              routeInformationProvider: appRouter.routeInformationProvider,
+              builder: (context, child) {
+                return BlocSelector<InitialCubit, InitialState, bool>(
+                  selector: (state) {
+                    return state.isFinish;
+                  },
+                  builder: (context, isFinish) {
+                    if (isFinish) {
+                      return child ?? const SizedBox.shrink();
+                    }
                     return const SplashPage();
-                  }
-                  return const HomePage();
-                },
-              ),
+                  },
+                );
+              },
             );
           }),
     );
