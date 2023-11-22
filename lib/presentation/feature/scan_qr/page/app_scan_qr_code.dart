@@ -9,25 +9,11 @@ import 'package:scan_qr_code/app/gen/assets.gen.dart';
 import 'package:scan_qr_code/presentation/feature/scan_qr/bloc/app_scan_qr_code_bloc.dart';
 import 'package:scan_qr_code/presentation/feature/scan_qr/bloc/app_scan_qr_code_event.dart';
 import 'package:scan_qr_code/presentation/feature/scan_qr/bloc/app_scan_qr_code_state.dart';
+import 'package:scan_qr_code/presentation/feature/scan_qr/models/app_scan_qr_code_params.dart';
 
 class AppScanQrCodePage extends StatefulWidget {
-  const AppScanQrCodePage(
-      {super.key, this.isInputLink = false, this.isWrite = false});
-  final bool isInputLink;
-  final bool isWrite;
-  static Future<ScanQrCodeData?> open(
-    BuildContext context, {
-    bool isInputLink = false,
-    bool isWrite = false,
-  }) async {
-    return Navigator.push<ScanQrCodeData?>(
-      context,
-      MaterialPageRoute(
-        builder: (context) =>
-            AppScanQrCodePage(isInputLink: isInputLink, isWrite: isWrite),
-      ),
-    );
-  }
+  const AppScanQrCodePage({super.key, required this.params});
+  final AppScanQrCodeParams params;
 
   @override
   State<AppScanQrCodePage> createState() {
@@ -138,7 +124,7 @@ class _AppScanQrCodePageState extends State<AppScanQrCodePage> {
                 return;
               }
               if (state.scanQrCodeData != null) {
-                if (widget.isWrite) {
+                if (widget.params.isWrite) {
                   context.back(result: state.scanQrCodeData);
                   return;
                 }
@@ -198,34 +184,33 @@ class _AppScanQrCodePageState extends State<AppScanQrCodePage> {
           // ),
         ],
         child: Scaffold(
-          backgroundColor: Colors.transparent,
+          // backgroundColor: Colors.transparent,
           extendBodyBehindAppBar: true,
+          extendBody: true,
           appBar: AppBar(
-            centerTitle: true,
-            leading: CloseButton(
-              color: context.colorScheme.onPrimary,
-            ),
-            title: Text(
-              'Quét mã',
-              style: TextStyle(color: context.colorScheme.onPrimary),
-            ),
+            // centerTitle: true,
+            // title: Text(
+            //   'Scan',
+            //   style: TextStyle(color: context.colorScheme.onPrimary),
+            // ),
             backgroundColor: Colors.transparent,
             elevation: 0,
           ),
           body: Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: BoxDecoration(
-              color: context.colorScheme.primary,
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                alignment: Alignment.topCenter,
-                opacity: 0.3,
-                image: ExactAssetImage(
-                  Assets.images.scanQrCode.path,
-                ),
-              ),
-            ),
+            padding: EdgeInsets.all(24.r),
+            // decoration: BoxDecoration(
+            //   color: context.colorScheme.primary,
+            //   image: DecorationImage(
+            //     fit: BoxFit.fill,
+            //     alignment: Alignment.topCenter,
+            //     opacity: 0.3,
+            //     image: ExactAssetImage(
+            //       Assets.images.scanQrCode.path,
+            //     ),
+            //   ),
+            // ),
             alignment: Alignment.center,
             child: isScannerInitialized
                 ? SafeArea(
@@ -238,31 +223,30 @@ class _AppScanQrCodePageState extends State<AppScanQrCodePage> {
                             borderRadius: BorderRadius.circular(16.r),
                           ),
                           child: MobileScanner(
-                            controller: mobileScannerCtrl,
-                            onDetect: (capture) {
-                              final barcodes = capture.barcodes;
-                              if (barcodes.isNotEmpty &&
-                                  !isScanSuccess &&
-                                  barcodes.first.rawValue != null) {
-                                context.read<AppScanQrCodeBloc>().add(
-                                      CaptureScanQrcode(
-                                        barcodes.first.rawValue!,
-                                      ),
-                                    );
-                                setState(() {
-                                  isScanSuccess = true;
-                                });
-                              }
-                            },
-                          ),
-                        ),
-                        Assets.icons.squareScanqr.svg(
-                          width: (MediaQuery.of(context).size.width - 50) / 2,
-                          height: (MediaQuery.of(context).size.width - 50) / 2,
-                          colorFilter: const ColorFilter.mode(
-                            colorWhite,
-                            BlendMode.srcIn,
-                          ),
+                              controller: mobileScannerCtrl,
+                              onDetect: (capture) {
+                                final barcodes = capture.barcodes;
+                                if (barcodes.isNotEmpty &&
+                                    !isScanSuccess &&
+                                    barcodes.first.rawValue != null) {
+                                  context.read<AppScanQrCodeBloc>().add(
+                                        CaptureScanQrcode(
+                                          barcodes.first.rawValue!,
+                                        ),
+                                      );
+                                  setState(() {
+                                    isScanSuccess = true;
+                                  });
+                                }
+                              },
+                              overlay: Assets.icons.squareScanqr.svg(
+                                width: (1.sw - 50.w) / 2,
+                                height: (1.sw - 50.w) / 2,
+                                colorFilter: const ColorFilter.mode(
+                                  colorWhite,
+                                  BlendMode.srcIn,
+                                ),
+                              )),
                         ),
                       ],
                     ),

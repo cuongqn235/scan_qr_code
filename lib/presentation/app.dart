@@ -56,14 +56,32 @@ class __MyAppState extends State<_MyApp> {
     appRouter = AppRouter.router(
       redirectController,
       redirect: (context, state) async {
-        try {
-          if (appBloc.state.isFirstLaunch == true) {
-            return AppRoutes.onBoard.path;
-          }
-          return AppRoutes.home.path;
-        } catch (e) {
+        if (appBloc.state.isFirstLaunch == true) {
           return AppRoutes.onBoard.path;
         }
+        if ((state.fullPath ?? '').isEmpty) {
+          return AppRoutes.splash.path;
+        }
+        final path = [
+          AppRoutes.home.path,
+          AppRoutes.scanQrCode.path,
+        ].firstWhere(
+          (element) => element == state.fullPath,
+          orElse: () => AppRoutes.home.path,
+        );
+        return path;
+        // if ((state.fullPath ?? '').isNotEmpty) {
+        //   final path = [
+        //     AppRoutes.home.path,
+        //     AppRoutes.scanQrCode.path,
+        //   ].firstWhere(
+        //     (element) => element == state.fullPath,
+        //     orElse: () => AppRoutes.home.path,
+        //   );
+        //   return path;
+        // } else {
+        //   return null;
+        // }
       },
     );
     intitial();
@@ -87,6 +105,8 @@ class __MyAppState extends State<_MyApp> {
     return MultiBlocListener(
       listeners: [
         BlocListener<AppBloc, AppState>(
+          listenWhen: (previous, current) =>
+              previous.isFirstLaunch == null && current.isFirstLaunch != null,
           listener: (context, state) {
             if (state.isFirstLaunch != null && !processIntital.isCompleted) {
               processIntital.complete();
@@ -95,7 +115,8 @@ class __MyAppState extends State<_MyApp> {
         ),
         BlocListener<AppBloc, AppState>(
           listenWhen: (previous, current) =>
-              previous.isFirstLaunch != current.isFirstLaunch,
+              previous.isFirstLaunch != current.isFirstLaunch &&
+              current.isFirstLaunch == false,
           listener: (context, state) {
             redirectController.add(dartz.unit);
           },

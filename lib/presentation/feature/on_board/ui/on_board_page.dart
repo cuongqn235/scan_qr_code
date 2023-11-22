@@ -2,7 +2,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:scan_qr_code/app/component/button/solid_button.dart';
-import 'package:scan_qr_code/app/component/icon_animation.dart';
 import 'package:scan_qr_code/app/extensions/colors.dart';
 import 'package:scan_qr_code/app/extensions/context.dart';
 import 'package:scan_qr_code/app/extensions/spaces.dart';

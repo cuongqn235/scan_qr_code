@@ -1,4 +1,8 @@
 ﻿enum AppRoutes {
+  splash(
+    name: 'splash',
+    path: '/splash',
+  ),
   onBoard(
     name: 'onBoard',
     path: '/onBoard',
@@ -6,6 +10,10 @@
   home(
     name: 'home',
     path: '/home',
+  ),
+  scanQrCode(
+    name: 'scanQrCode',
+    path: '/scanQrCode',
   );
 
   const AppRoutes({

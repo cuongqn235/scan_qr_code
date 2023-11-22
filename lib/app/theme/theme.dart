@@ -32,9 +32,18 @@ class AppTheme {
           color: appLightColorScheme.primary,
         ),
         titleTextStyle: context.textTheme.titleLarge
-            ?.copyWith(color: appLightColorScheme.primary),
+            ?.copyWith(color: const Color.fromARGB(255, 93, 88, 88)),
         color: Colors.transparent,
         elevation: 0,
+      ),
+      iconTheme: const IconThemeData(
+        color: colorBlack,
+      ),
+      bottomAppBarTheme: BottomAppBarTheme(
+        color: appLightColorScheme.primary,
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: appLightColorScheme.primary,
       ),
     );
   }
@@ -43,26 +52,36 @@ class AppTheme {
     BuildContext context,
   ) {
     return ThemeData(
-        useMaterial3: true,
-        primarySwatch: Colors.blue,
-        // fontFamily: FontFamily.nunitoSans,
-        scaffoldBackgroundColor: const Color(0xff333333),
-        colorScheme: appDarkColorScheme,
-        inputDecorationTheme: inputDecorationTheme,
-        textTheme: customizeTextTheme(colorWhite),
-        floatingActionButtonTheme: FloatingActionButtonThemeData(
-          backgroundColor: appDarkColorScheme.primary,
-          foregroundColor: colorWhite,
+      useMaterial3: true,
+      primarySwatch: Colors.blue,
+      // fontFamily: FontFamily.nunitoSans,
+      scaffoldBackgroundColor: const Color(0xff333333),
+      colorScheme: appDarkColorScheme,
+      inputDecorationTheme: inputDecorationTheme,
+      textTheme: customizeTextTheme(colorWhite),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: appDarkColorScheme.primary,
+        foregroundColor: colorWhite,
+      ),
+      appBarTheme: AppBarTheme(
+        centerTitle: true,
+        iconTheme: IconThemeData(
+          color: appDarkColorScheme.primary,
         ),
-        appBarTheme: AppBarTheme(
-          centerTitle: true,
-          iconTheme: IconThemeData(
-            color: appDarkColorScheme.primary,
-          ),
-          titleTextStyle: context.textTheme.titleLarge
-              ?.copyWith(color: appDarkColorScheme.primary),
-          color: Colors.transparent,
-          elevation: 0,
-        ));
+        titleTextStyle: context.textTheme.titleLarge
+            ?.copyWith(color: appDarkColorScheme.primary),
+        color: Colors.transparent,
+        elevation: 0,
+      ),
+      iconTheme: const IconThemeData(
+        color: colorWhite,
+      ),
+      bottomAppBarTheme: BottomAppBarTheme(
+        color: appDarkColorScheme.primary,
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: appDarkColorScheme.primary,
+      ),
+    );
   }
 }
