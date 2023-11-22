@@ -4,6 +4,6 @@ import 'package:scan_qr_code/domain/repositories/scan/i_scan_repository.dart';
 
 @LazySingleton(as: IScanRepository)
 class ScanRepository implements IScanRepository {
-  final ScanDao _ScanDao;
-  ScanRepository(this._ScanDao);
+  final ScanDao _scanDao;
+  ScanRepository(this._scanDao);
 }

@@ -23,6 +23,7 @@ scripts:
    all: "rm -rf build && flutter clean && flutter pub get && dart run build_runner build --delete-conflicting-outputs && cd ios && pod deintegrate && pod install && cd .."
    gen: "dart run build_runner build --delete-conflicting-outputs"
    get: "flutter pub get"
+   setIcon: "flutter pub get && dart run flutter_launcher_icons"
 
 environment:
   sdk: '>=3.1.4 <4.0.0'
@@ -53,12 +54,22 @@ dependencies:
   dartz: ^0.10.1
   cached_network_image: ^3.3.0
   flutter_svg: ^2.0.9
+  dev: ^1.0.0
+  flutter_screenutil: ^5.9.0
+  freezed_annotation: ^2.4.1
+  mobile_scanner: ^3.5.2
+  permission_handler: ^11.0.1
+  flutter_native_splash: ^2.3.5
+  go_router: ^12.1.1
+  async: ^2.10.0
 
 dev_dependencies:
   injectable_generator:
   build_runner:
   json_serializable:
   flutter_gen_runner:
+  flutter_launcher_icons: ^0.13.1
+  freezed: ^2.4.5
   mockito: ^5.4.3
   flutter_test:
     sdk: flutter
@@ -85,6 +96,7 @@ flutter:
   assets:
     - assets/database/migration/
     - assets/icons/
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -115,3 +127,23 @@ flutter_gen:
     output: lib/app/gen/
     integrations:
       flutter_svg: true
+
+# flutter pub get
+# dart run flutter_launcher_icons
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/icons/ic_logo.jpg"
+  min_sdk_android: 21
+# dart run flutter_native_splash:create
+flutter_native_splash:
+  color: "#FDB623"
+  image: assets/images/splash_light.png
+  color_dark: "#333333"
+  image_dark: assets/images/splash_dark.png
+  android_12:
+    color: "#FDB623"
+    image: assets/images/splash_light.png
+    color_dark: "#333333"
+    image_dark: assets/images/splash_dark.png
