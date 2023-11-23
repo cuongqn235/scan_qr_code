@@ -61,16 +61,21 @@ class AppBottomAppBar extends StatelessWidget {
                     vertical: 8.h,
                     horizontal: 8.w,
                   ),
-                  child: const Align(
+                  child: Align(
                     alignment: Alignment.centerRight,
-                    child: Column(
-                      // crossAxisAlignment: CrossAxisAlignment.enced,
-                      children: [
-                        Icon(Icons.history),
-                        Text(
-                          'History',
-                        ),
-                      ],
+                    child: InkWell(
+                      onTap: () {
+                        context.navigator.pushHistory();
+                      },
+                      child: const Column(
+                        // crossAxisAlignment: CrossAxisAlignment.enced,
+                        children: [
+                          Icon(Icons.history),
+                          Text(
+                            'History',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

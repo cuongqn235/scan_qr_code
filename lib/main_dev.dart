@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:scan_qr_code/app/inject_dependency/inject_dependency.dart';
 import 'package:scan_qr_code/presentation/app.dart';
@@ -9,6 +10,10 @@ void main() async {
     configureDependencies(),
     ScreenUtil.ensureScreenSize(),
   ]);
-
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle.dark.copyWith(
+      statusBarColor: Colors.transparent,
+    ),
+  );
   runApp(const App());
 }

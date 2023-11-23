@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:scan_qr_code/app/inject_dependency/inject_dependency.dart';
 import 'package:scan_qr_code/app/router/app_router.dart';
 import 'package:scan_qr_code/app/router/app_routes.dart';
@@ -62,10 +63,16 @@ class __MyAppState extends State<_MyApp> {
         if ((state.fullPath ?? '').isEmpty) {
           return AppRoutes.splash.path;
         }
-        final path = [
-          AppRoutes.home.path,
-          AppRoutes.scanQrCode.path,
-        ].firstWhere(
+        final allRoutes = AppRoutes.values
+            .where(
+              (element) => ![
+                AppRoutes.splash,
+                AppRoutes.onBoard,
+              ].contains(element),
+            )
+            .map((e) => e.path)
+            .toList();
+        final path = allRoutes.firstWhere(
           (element) => element == state.fullPath,
           orElse: () => AppRoutes.home.path,
         );
@@ -135,16 +142,18 @@ class __MyAppState extends State<_MyApp> {
               routerDelegate: appRouter.routerDelegate,
               routeInformationProvider: appRouter.routeInformationProvider,
               builder: (context, child) {
-                return BlocSelector<InitialCubit, InitialState, bool>(
-                  selector: (state) {
-                    return state.isFinish;
-                  },
-                  builder: (context, isFinish) {
-                    if (isFinish) {
-                      return child ?? const SizedBox.shrink();
-                    }
-                    return const SplashPage();
-                  },
+                return LoaderOverlay(
+                  child: BlocSelector<InitialCubit, InitialState, bool>(
+                    selector: (state) {
+                      return state.isFinish;
+                    },
+                    builder: (context, isFinish) {
+                      if (isFinish) {
+                        return child ?? const SizedBox.shrink();
+                      }
+                      return const SplashPage();
+                    },
+                  ),
                 );
               },
             );

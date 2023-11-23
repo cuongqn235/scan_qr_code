@@ -7,6 +7,7 @@ abstract class AppNavigator {
   void pushOnBoard();
   void pushHome();
   void pushScanQrcode(AppScanQrCodeParams params);
+  void pushHistory();
 }
 
 class AppNavigatorImpl implements AppNavigator {
@@ -35,6 +36,13 @@ class AppNavigatorImpl implements AppNavigator {
     context.push(
       AppRoutes.scanQrCode.path,
       extra: params,
+    );
+  }
+
+  @override
+  void pushHistory() {
+    context.push(
+      AppRoutes.history.path,
     );
   }
 }

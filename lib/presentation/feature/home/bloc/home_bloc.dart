@@ -1,14 +1,17 @@
 import 'dart:async';
 
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:scan_qr_code/app/common/application/base_state.dart';
+import 'package:scan_qr_code/app/common/model/status.dart';
 part 'home_event.dart';
 part 'home_state.dart';
+part 'home_bloc.freezed.dart';
 
 @injectable
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc() : super(HomeInitial()) {
+  HomeBloc() : super(const HomeState()) {
     on<HomeEventOnStart>(_onStart);
   }
 

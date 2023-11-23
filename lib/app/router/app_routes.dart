@@ -14,6 +14,10 @@
   scanQrCode(
     name: 'scanQrCode',
     path: '/scanQrCode',
+  ),
+  history(
+    name: 'history',
+    path: '/history',
   );
 
   const AppRoutes({

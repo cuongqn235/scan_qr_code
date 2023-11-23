@@ -1,20 +1,15 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:scan_qr_code/app/common/application/base_state.dart';
+import 'package:scan_qr_code/app/common/model/status.dart';
 
 part 'app_scan_qr_code_state.freezed.dart';
 
 @freezed
-class AppScanQrCodeState
-// extends AppScreenState
-    with
-        _$AppScanQrCodeState
-// implements INeedLoading
-{
+class AppScanQrCodeState with _$AppScanQrCodeState implements BaseState {
   const factory AppScanQrCodeState({
-    // @Default(null) UIError? error,
-    @Default(false) bool showLoading,
+    @Default(Status.idle()) Status status,
     @Default(false) bool correctFormat,
     ScanQrCodeData? scanQrCodeData,
-    // ScanQrCodeData? pasteResult,
     @Default(true) bool isScanable,
     @Default(false) bool isWrite,
   }) = _AppScanQrCodeState;
