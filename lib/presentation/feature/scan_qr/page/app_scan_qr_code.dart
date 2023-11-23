@@ -3,12 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:scan_qr_code/app/component/popup/permission/camera_bottom_popup_permission.dart';
 import 'package:scan_qr_code/app/extensions/colors.dart';
 import 'package:scan_qr_code/app/extensions/context.dart';
 import 'package:scan_qr_code/app/gen/assets.gen.dart';
 import 'package:scan_qr_code/presentation/feature/scan_qr/bloc/app_scan_qr_code_bloc.dart';
-import 'package:scan_qr_code/presentation/feature/scan_qr/bloc/app_scan_qr_code_event.dart';
-import 'package:scan_qr_code/presentation/feature/scan_qr/bloc/app_scan_qr_code_state.dart';
 import 'package:scan_qr_code/presentation/feature/scan_qr/models/app_scan_qr_code_params.dart';
 
 class AppScanQrCodePage extends StatefulWidget {
@@ -23,47 +22,20 @@ class AppScanQrCodePage extends StatefulWidget {
 
 class _AppScanQrCodePageState extends State<AppScanQrCodePage> {
   late bool isScannerInitialized = false;
-  late TextEditingController linkController;
   bool isScanSuccess = false;
   late MobileScannerController mobileScannerCtrl;
   late bool isDispose;
+  late AppScanQrCodeBloc bloc;
   @override
   void initState() {
     super.initState();
     checkCameraState();
-    linkController = TextEditingController();
     mobileScannerCtrl = MobileScannerController(
       detectionSpeed: DetectionSpeed.normal,
     );
-
+    bloc = context.read<AppScanQrCodeBloc>();
     isDispose = false;
   }
-
-  // @override
-  // void onError(
-  //   BuildContext context,
-  //   AppScanQrCodeBloc screenBloc,
-  //   UIError error,
-  // ) {
-  //   if (error.cause is DioError && error.httpCode == 404) {
-  //     showAlert(context,
-  //         content: 'Mã QR không đúng hoặc đã hết hạn',
-  //         title: 'Thông báo', onTapConfirmButton: () {
-  //       screenBloc.add(AppScanQrCodeEventClearResult());
-  //     });
-  //   } else {
-  //     super.onError(context, screenBloc, error);
-  //   }
-  // }
-
-  // @override
-  // void onConfirmError(BuildContext context) {
-  //   context.read<AppScanQrCodeBloc>().add(AppScanQrCodeEventClearResult());
-  //   setState(() {
-  //     isScanSuccess = false;
-  //   });
-  //   mobileScannerCtrl.start();
-  // }
 
   Future<void> checkCameraState() async {
     final cameraStatus = await [
@@ -77,13 +49,13 @@ class _AppScanQrCodePageState extends State<AppScanQrCodePage> {
         isScannerInitialized = true;
       });
     } else {
-      // await CameraBottomPopupPermission.show(
-      //   context,
-      //   isDismissible: false,
-      //   onNegative: () {
-      //     Navigator.of(context).pop();
-      //   },
-      // );
+      await CameraBottomPopupPermission.show(
+        context,
+        isDismissible: false,
+        onNegative: () {
+          Navigator.of(context).pop();
+        },
+      );
     }
   }
 
@@ -91,168 +63,109 @@ class _AppScanQrCodePageState extends State<AppScanQrCodePage> {
   Widget build(
     BuildContext context,
   ) {
-    return BlocProvider(
-      create: (context) => AppScanQrCodeBloc(),
-      child: MultiBlocListener(
-        listeners: [
-          BlocListener<AppScanQrCodeBloc, AppScanQrCodeState>(
-            listenWhen: (p, c) => p.isScanable != c.isScanable,
-            listener: (context, state) {
-              state.isScanable
-                  ? mobileScannerCtrl.start()
-                  : mobileScannerCtrl.stop();
-            },
-          ),
-          BlocListener<AppScanQrCodeBloc, AppScanQrCodeState>(
-            listenWhen: (p, c) =>
-                p.correctFormat != c.correctFormat && !c.correctFormat,
-            listener: (context, state) {
-              // showAlert(context,
-              //     content: 'Mã QR không đúng hoặc đã hết hạn',
-              //     title: 'Thông báo', onTapConfirmButton: () {
-              //   setState(() {
-              //     isScanSuccess = false;
-              //   });
-              //   screenBloc.add(AppScanQrCodeEventClearResult());
-              // });
-            },
-          ),
-          BlocListener<AppScanQrCodeBloc, AppScanQrCodeState>(
-            listenWhen: (p, c) => c.scanQrCodeData != null,
-            listener: (context, state) async {
-              if (!mounted) {
-                return;
-              }
-              if (state.scanQrCodeData != null) {
-                if (widget.params.isWrite) {
-                  context.back(result: state.scanQrCodeData);
-                  return;
-                }
-
-                // screenBloc.add(AppScanQrCodeEventClearResult());
-                setState(() {
-                  isScanSuccess = false;
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AppScanQrCodeBloc, AppScanQrCodeState>(
+          listenWhen: (p, c) => p.isScanable != c.isScanable,
+          listener: (context, state) {
+            state.isScanable
+                ? mobileScannerCtrl.start()
+                : mobileScannerCtrl.stop();
+          },
+        ),
+        BlocListener<AppScanQrCodeBloc, AppScanQrCodeState>(
+          listenWhen: (p, c) =>
+              p.correctFormat != c.correctFormat && c.correctFormat == false,
+          listener: (context, state) {
+            context.showAlert(
+                content: 'Mã QR không đúng hoặc đã hết hạn',
+                title: 'Thông báo',
+                onTapConfirmButton: () {
+                  setState(() {
+                    isScanSuccess = false;
+                  });
+                  bloc.add(AppScanQrCodeEventClearResult());
                 });
-                await mobileScannerCtrl.start();
-              }
-            },
-          ),
-          // BlocListener<AppScanQrCodeBloc, AppScanQrCodeState>(
-          //   listenWhen: (p, c) =>
-          //       p.pasteResult != c.pasteResult && c.pasteResult != null,
-          //   listener: (context, state) async {
-          //     final qrId = state.scanQrCodeData
-          //         ?.mapOrNull(qrContract: (v) => v.qrId, qrId: (v) => v.qrId);
-          //     final estateBasicInfo = state.pasteResult?.mapOrNull(
-          //         estateContract: (v) => v.info, qrContract: (v) => v.info);
-          //     if (estateBasicInfo != null && qrId != null) {
-          //       await Navigator.pushReplacement(
-          //           context,
-          //           MaterialPageRoute(
-          //             builder: (context) => BlocProvider(
-          //               create: (context) => RenterScanEstateContractBloc(
-          //                   estateDetailRepository: Get.find(),
-          //                   authenRepo: Get.find(),
-          //                   userProfileRepo: Get.find())
-          //                 ..add(RenterScanEstateContractOnStarted(
-          //                     qrId: qrId, data: estateBasicInfo)),
-          //               child: RenterScanEstateContractPage(),
-          //             ),
-          //           ));
-          //       return;
-          //     }
+          },
+        ),
+        BlocListener<AppScanQrCodeBloc, AppScanQrCodeState>(
+          listenWhen: (p, c) => p.data != c.data && c.data != null,
+          listener: (context, state) async {
+            if (!mounted) {
+              return;
+            }
+            if (state.data != null) {
+              context.back(result: state.data);
+              return;
 
-          //     state.pasteResult?.mapOrNull(
-          //       estateId: (e) async => Navigator.push<void>(
-          //         context,
-          //         MaterialPageRoute(
-          //           builder: (context) => BlocProvider(
-          //             create: (context) => LinkBioEstateBloc(Get.find())
-          //               ..add(
-          //                 LinkBioEstateEventOnStart(
-          //                   e.estateId,
-          //                 ),
-          //               ),
-          //             child: const LinkBioEstatePage(),
-          //           ),
-          //         ),
-          //       ),
-          //     );
-
-          //     screenBloc.add(AppScanQrCodeEventClearResult());
-          //   },
-          // ),
-        ],
-        child: Scaffold(
-          // backgroundColor: Colors.transparent,
-          extendBodyBehindAppBar: true,
-          extendBody: true,
-          appBar: AppBar(
-            // centerTitle: true,
-            // title: Text(
-            //   'Scan',
-            //   style: TextStyle(color: context.colorScheme.onPrimary),
-            // ),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-          ),
-          body: Container(
-            width: double.infinity,
-            height: double.infinity,
-            padding: EdgeInsets.all(24.r),
-            // decoration: BoxDecoration(
-            //   color: context.colorScheme.primary,
-            //   image: DecorationImage(
-            //     fit: BoxFit.fill,
-            //     alignment: Alignment.topCenter,
-            //     opacity: 0.3,
-            //     image: ExactAssetImage(
-            //       Assets.images.scanQrCode.path,
-            //     ),
-            //   ),
-            // ),
-            alignment: Alignment.center,
-            child: isScannerInitialized
-                ? SafeArea(
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Container(
-                          clipBehavior: Clip.hardEdge,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16.r),
-                          ),
-                          child: MobileScanner(
-                              controller: mobileScannerCtrl,
-                              onDetect: (capture) {
-                                final barcodes = capture.barcodes;
-                                if (barcodes.isNotEmpty &&
-                                    !isScanSuccess &&
-                                    barcodes.first.rawValue != null) {
-                                  context.read<AppScanQrCodeBloc>().add(
-                                        CaptureScanQrcode(
-                                          barcodes.first.rawValue!,
-                                        ),
-                                      );
-                                  setState(() {
-                                    isScanSuccess = true;
-                                  });
-                                }
-                              },
-                              overlay: Assets.icons.squareScanqr.svg(
-                                width: (1.sw - 50.w) / 2,
-                                height: (1.sw - 50.w) / 2,
-                                colorFilter: const ColorFilter.mode(
-                                  colorWhite,
-                                  BlendMode.srcIn,
-                                ),
-                              )),
+              // bloc.add(AppScanQrCodeEventClearResult());
+              // setState(() {
+              //   isScanSuccess = false;
+              // });
+              // await mobileScannerCtrl.start();
+            }
+          },
+        ),
+        BlocListener<AppScanQrCodeBloc, AppScanQrCodeState>(
+          listenWhen: (p, c) => p.data != c.data && c.data != null,
+          listener: (context, state) async {
+            // bloc.add(AppScanQrCodeEventClearResult());
+          },
+        ),
+      ],
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        extendBody: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          padding: EdgeInsets.all(24.r),
+          alignment: Alignment.center,
+          child: isScannerInitialized
+              ? SafeArea(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16.r),
                         ),
-                      ],
-                    ),
-                  )
-                : const SizedBox(),
-          ),
+                        child: MobileScanner(
+                            controller: mobileScannerCtrl,
+                            onDetect: (capture) {
+                              mobileScannerCtrl.stop();
+                              final barcodes = capture.barcodes;
+                              if (barcodes.isNotEmpty &&
+                                  !isScanSuccess &&
+                                  barcodes.first.rawValue != null) {
+                                context.read<AppScanQrCodeBloc>().add(
+                                      CaptureScanQrcode(
+                                        barcodes.first,
+                                      ),
+                                    );
+                                setState(() {
+                                  isScanSuccess = true;
+                                });
+                              }
+                            },
+                            overlay: Assets.icons.squareScanqr.svg(
+                              width: (1.sw - 50.w) / 2,
+                              height: (1.sw - 50.w) / 2,
+                              colorFilter: const ColorFilter.mode(
+                                colorWhite,
+                                BlendMode.srcIn,
+                              ),
+                            )),
+                      ),
+                    ],
+                  ),
+                )
+              : const SizedBox(),
         ),
       ),
     );
@@ -267,7 +180,9 @@ class _AppScanQrCodePageState extends State<AppScanQrCodePage> {
 
   @override
   void dispose() {
-    linkController.dispose();
+    if (mobileScannerCtrl.isStarting) {
+      mobileScannerCtrl.stop();
+    }
     mobileScannerCtrl.dispose();
     super.dispose();
   }

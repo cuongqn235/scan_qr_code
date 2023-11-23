@@ -1,8 +1,4 @@
 ﻿enum AppRoutes {
-  splash(
-    name: 'splash',
-    path: '/splash',
-  ),
   onBoard(
     name: 'onBoard',
     path: '/onBoard',

@@ -27,6 +27,7 @@ class _ErrorPageState extends State<ErrorPage> {
             children: [
               Assets.images.notFoundImage.image(
                 width: double.infinity,
+                color: context.colorScheme.primary,
               ),
               spaceH24,
               Text(

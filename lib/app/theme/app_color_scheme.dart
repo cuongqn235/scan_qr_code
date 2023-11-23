@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scan_qr_code/app/extensions/context.dart';
 
 class AppColorScheme {
   AppColorScheme(this.context);
@@ -100,43 +101,43 @@ class AppColorScheme {
   final Color selectedChipColor = const Color(0xff6C6C6C);
   final Color unselectedChipColor = const Color(0xffF5F5F5);
 
-  // Color get colorsurfacessurface1 => context.isDark
-  //     ? _AppColorSchemeDark.colorsurfacesdarksurface1
-  //     : _AppColorSchemeLight.colorsurfaceslightsurface1;
-  // Color get colorsurfacessurface2 => context.isDark
-  //     ? _AppColorSchemeDark.colorsurfacesdarksurface2
-  //     : _AppColorSchemeLight.colorsurfaceslightsurface2;
-  // Color get colorsurfacessurface3 => context.isDark
-  //     ? _AppColorSchemeDark.colorsurfacesdarksurface3
-  //     : _AppColorSchemeLight.colorsurfaceslightsurface3;
-  // Color get colorsurfacessurface4 => context.isDark
-  //     ? _AppColorSchemeDark.colorsurfacesdarksurface4
-  //     : _AppColorSchemeLight.colorsurfaceslightsurface4;
-  // Color get colorsurfacessurface5 => context.isDark
-  //     ? _AppColorSchemeDark.colorsurfacesdarksurface5
-  //     : _AppColorSchemeLight.colorsurfaceslightsurface5;
+  Color get colorsurfacessurface1 => context.isDark
+      ? _AppColorSchemeDark.colorsurfacesdarksurface1
+      : _AppColorSchemeLight.colorsurfaceslightsurface1;
+  Color get colorsurfacessurface2 => context.isDark
+      ? _AppColorSchemeDark.colorsurfacesdarksurface2
+      : _AppColorSchemeLight.colorsurfaceslightsurface2;
+  Color get colorsurfacessurface3 => context.isDark
+      ? _AppColorSchemeDark.colorsurfacesdarksurface3
+      : _AppColorSchemeLight.colorsurfaceslightsurface3;
+  Color get colorsurfacessurface4 => context.isDark
+      ? _AppColorSchemeDark.colorsurfacesdarksurface4
+      : _AppColorSchemeLight.colorsurfaceslightsurface4;
+  Color get colorsurfacessurface5 => context.isDark
+      ? _AppColorSchemeDark.colorsurfacesdarksurface5
+      : _AppColorSchemeLight.colorsurfaceslightsurface5;
 
-  // Color get colorExtendedTextTitleLarge => context.isDark
-  //     ? _AppColorSchemeDark.colorextendedtexttitlelargedark
-  //     : _AppColorSchemeLight.colorextendedtexttitlelargelight;
-  // Color get colorextendedtexttitlemedium => context.isDark
-  //     ? _AppColorSchemeDark.colorextendedtexttitlelargedark
-  //     : _AppColorSchemeLight.colorextendedtexttitlemediumlight;
-  // Color get colorextendedtexttitlesmall => context.isDark
-  //     ? _AppColorSchemeDark.colorextendedtexttitlesmalldark
-  //     : _AppColorSchemeLight.colorextendedtexttitlesmalllight;
-  // Color get colorextendedtextbodyBodylarge => context.isDark
-  //     ? _AppColorSchemeDark.colorextendedtextbodyBodylargeDark
-  //     : _AppColorSchemeLight.colorextendedtextbodyBodylargeLight;
-  // Color get colorExtendedTextBodyBodyMedium => context.isDark
-  //     ? _AppColorSchemeDark.colorextendedtextbodyBodymediumDark
-  //     : _AppColorSchemeLight.colorextendedtextbodyBodymediumLight;
-  // Color get colorExtendedTextBodyBodySmall => context.isDark
-  //     ? _AppColorSchemeDark.colorextendedtextbodyBodymediumDark
-  //     : _AppColorSchemeLight.colorextendedtextbodyBodysmallLight;
-  // Color get colorextendedtextbodyTitleSmall => context.isDark
-  //     ? _AppColorSchemeDark.colorextendedtextbodyBodymediumDark
-  //     : _AppColorSchemeLight.colorextendedtextbodyBodysmallLight;
+  Color get colorExtendedTextTitleLarge => context.isDark
+      ? _AppColorSchemeDark.colorextendedtexttitlelargedark
+      : _AppColorSchemeLight.colorextendedtexttitlelargelight;
+  Color get colorextendedtexttitlemedium => context.isDark
+      ? _AppColorSchemeDark.colorextendedtexttitlelargedark
+      : _AppColorSchemeLight.colorextendedtexttitlemediumlight;
+  Color get colorextendedtexttitlesmall => context.isDark
+      ? _AppColorSchemeDark.colorextendedtexttitlesmalldark
+      : _AppColorSchemeLight.colorextendedtexttitlesmalllight;
+  Color get colorextendedtextbodyBodylarge => context.isDark
+      ? _AppColorSchemeDark.colorextendedtextbodyBodylargeDark
+      : _AppColorSchemeLight.colorextendedtextbodyBodylargeLight;
+  Color get colorExtendedTextBodyBodyMedium => context.isDark
+      ? _AppColorSchemeDark.colorextendedtextbodyBodymediumDark
+      : _AppColorSchemeLight.colorextendedtextbodyBodymediumLight;
+  Color get colorExtendedTextBodyBodySmall => context.isDark
+      ? _AppColorSchemeDark.colorextendedtextbodyBodymediumDark
+      : _AppColorSchemeLight.colorextendedtextbodyBodysmallLight;
+  Color get colorextendedtextbodyTitleSmall => context.isDark
+      ? _AppColorSchemeDark.colorextendedtextbodyBodymediumDark
+      : _AppColorSchemeLight.colorextendedtextbodyBodysmallLight;
 
   Color get colorSurfacesSurface1 =>
       _AppColorSchemeLight.colorsurfaceslightsurface1;
@@ -149,8 +150,8 @@ class AppColorScheme {
   Color get colorSurfacesSurface5 =>
       _AppColorSchemeLight.colorsurfaceslightsurface5;
 
-  Color get colorExtendedTextTitleLarge =>
-      _AppColorSchemeLight.colorextendedtexttitlelargelight;
+  // Color get colorExtendedTextTitleLarge =>
+  //     _AppColorSchemeLight.colorextendedtexttitlelargelight;
   Color get colorExtendedTextTitleMedium =>
       _AppColorSchemeLight.colorextendedtexttitlemediumlight;
   Color get colorExtendedTextTitleSmall =>
@@ -161,8 +162,8 @@ class AppColorScheme {
       _AppColorSchemeLight.colorextendedtextbodyBodymediumLight;
   Color get colorExtendedTextBodySmall =>
       _AppColorSchemeLight.colorextendedtextbodyBodysmallLight;
-  Color get colorextendedtextbodyTitleSmall =>
-      _AppColorSchemeLight.colorextendedtextbodyBodysmallLight;
+  // Color get colorextendedtextbodyTitleSmall =>
+  //     _AppColorSchemeLight.colorextendedtextbodyBodysmallLight;
 
   get backgroundLight => null;
 
@@ -182,37 +183,37 @@ abstract class _AppColorSchemeLight {
   static const Color colorextendedtextbodyBodylargeLight = Color(0xff383c3b);
   static const Color colorextendedtextbodyBodymediumLight = Color(0xff5c5f5e);
   static const Color colorextendedtextbodyBodysmallLight = Color(0xff666666);
-  static const Color colorextendedbottombarlight01 = Color(0xffffffff);
-  static const Color colorextendedbottombarlight02 = Color(0xff0f4c81);
-  static const Color colorsyslightprimary = Color(0xff2d6197);
-  static const Color colorsyslightonprimary = Color(0xffffffff);
-  static const Color colorsyslightprimarycontainer = Color(0xffd2e4ff);
-  static const Color colorsyslightonprimarycontainer = Color(0xff001c37);
-  static const Color colorsyslightsecondary = Color(0xff565f6d);
-  static const Color colorsyslightonsecondary = Color(0xffffffff);
-  static const Color colorsyslightsecondarycontainer = Color(0xffdae3f4);
-  static const Color colorsyslightonsecondarycontainer = Color(0xff131c28);
-  static const Color colorsyslighttertiary = Color(0xff6a5873);
-  static const Color colorsyslightontertiary = Color(0xffffffff);
-  static const Color colorsyslighttertiarycontainer = Color(0xfff2dbfb);
-  static const Color colorsyslightontertiarycontainer = Color(0xff24162d);
-  static const Color colorsyslighterror = Color(0xffba1a1a);
-  static const Color colorsyslightonerror = Color(0xffffffff);
-  static const Color colorsyslighterrorcontainer = Color(0xffffdad6);
-  static const Color colorsyslightonerrorcontainer = Color(0xff410002);
-  static const Color colorsyslightbackground = Color(0xffffffff);
-  static const Color colorsyslightonbackground = Color(0xff1a1c1e);
-  static const Color colorsyslightsurface = Color(0xfffdfcff);
-  static const Color colorsyslightonsurface = Color(0xff1a1c1e);
-  static const Color colorsyslightsurfacevariant = Color(0xffe0e2ea);
-  static const Color colorsyslightonsurfacevariant = Color(0xff44474d);
-  static const Color colorsyslightoutline = Color(0xff74777e);
-  static const Color colorsyslightshadow = Color(0xff000000);
-  static const Color colorsyslightinversesurface = Color(0xff2f3033);
-  static const Color colorsyslightinverseonsurface = Color(0xfff1f0f3);
-  static const Color colorsyslightinverseprimary = Color(0xffa0c9ff);
-  static const Color colorsyslightsurfacetint = Color(0xff2d6197);
-  static const Color colorsyslightsurfacetintcolor = Color(0xff2d6197);
+  // static const Color colorextendedbottombarlight01 = Color(0xffffffff);
+  // static const Color colorextendedbottombarlight02 = Color(0xff0f4c81);
+  // static const Color colorsyslightprimary = Color(0xff2d6197);
+  // static const Color colorsyslightonprimary = Color(0xffffffff);
+  // static const Color colorsyslightprimarycontainer = Color(0xffd2e4ff);
+  // static const Color colorsyslightonprimarycontainer = Color(0xff001c37);
+  // static const Color colorsyslightsecondary = Color(0xff565f6d);
+  // static const Color colorsyslightonsecondary = Color(0xffffffff);
+  // static const Color colorsyslightsecondarycontainer = Color(0xffdae3f4);
+  // static const Color colorsyslightonsecondarycontainer = Color(0xff131c28);
+  // static const Color colorsyslighttertiary = Color(0xff6a5873);
+  // static const Color colorsyslightontertiary = Color(0xffffffff);
+  // static const Color colorsyslighttertiarycontainer = Color(0xfff2dbfb);
+  // static const Color colorsyslightontertiarycontainer = Color(0xff24162d);
+  // static const Color colorsyslighterror = Color(0xffba1a1a);
+  // static const Color colorsyslightonerror = Color(0xffffffff);
+  // static const Color colorsyslighterrorcontainer = Color(0xffffdad6);
+  // static const Color colorsyslightonerrorcontainer = Color(0xff410002);
+  // static const Color colorsyslightbackground = Color(0xffffffff);
+  // static const Color colorsyslightonbackground = Color(0xff1a1c1e);
+  // static const Color colorsyslightsurface = Color(0xfffdfcff);
+  // static const Color colorsyslightonsurface = Color(0xff1a1c1e);
+  // static const Color colorsyslightsurfacevariant = Color(0xffe0e2ea);
+  // static const Color colorsyslightonsurfacevariant = Color(0xff44474d);
+  // static const Color colorsyslightoutline = Color(0xff74777e);
+  // static const Color colorsyslightshadow = Color(0xff000000);
+  // static const Color colorsyslightinversesurface = Color(0xff2f3033);
+  // static const Color colorsyslightinverseonsurface = Color(0xfff1f0f3);
+  // static const Color colorsyslightinverseprimary = Color(0xffa0c9ff);
+  // static const Color colorsyslightsurfacetint = Color(0xff2d6197);
+  // static const Color colorsyslightsurfacetintcolor = Color(0xff2d6197);
 }
 
 abstract class _AppColorSchemeDark {

@@ -32,7 +32,7 @@ class AppTheme {
           color: appLightColorScheme.primary,
         ),
         titleTextStyle: context.textTheme.titleLarge
-            ?.copyWith(color: const Color.fromARGB(255, 93, 88, 88)),
+            ?.copyWith(color: appLightColorScheme.primary),
         color: Colors.transparent,
         elevation: 0,
       ),

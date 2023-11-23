@@ -19,7 +19,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   final IAppRepository _appRepository;
   FutureOr<void> _initial(AppEventInitial event, Emitter<AppState> emit) async {
     await Future.delayed(const Duration(seconds: 1));
-
     final isFirstLaunch = _appRepository.isFirstLaunch;
 
     if (isFirstLaunch) {

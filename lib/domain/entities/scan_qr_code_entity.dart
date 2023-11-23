@@ -25,7 +25,7 @@ class ScanQrCodeEntity with _$ScanQrCodeEntity {
   }) = _ScanQrCodeEntityUrlBookmark;
 
   factory ScanQrCodeEntity.wifi({
-    String? encryptionType,
+    int? encryptionType,
     String? ssid,
     String? password,
   }) = _ScanQrCodeEntityWifi;
