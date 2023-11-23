@@ -97,7 +97,8 @@ class __MyAppState extends State<_MyApp> {
 
           //   return AppRoutes.home.path;
           // }
-          if (state.matchedLocation.compareTo('/') != 0) {
+          if (state.matchedLocation.compareTo('/') != 0 &&
+              state.matchedLocation.compareTo(AppRoutes.onBoard.path) != 0) {
             return state.fullPath;
           }
           return AppRoutes.home.path;

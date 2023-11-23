@@ -4,6 +4,7 @@ import 'package:scan_qr_code/app/extensions/context.dart';
 import 'package:scan_qr_code/app/extensions/spaces.dart';
 import 'package:scan_qr_code/app/extensions/typography.dart';
 import 'package:scan_qr_code/presentation/feature/scan_qr/models/scan_qr_code_data.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class QrCodeDialog extends StatelessWidget {
   const QrCodeDialog({super.key, required this.data});
@@ -57,7 +58,15 @@ class QrCodeDialog extends StatelessWidget {
               },
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
+                data.maybeMap(
+                    orElse: () => const SizedBox.shrink(),
+                    urlBookmark: (data) {
+                      launchUrl(
+                        Uri.parse(data.url),
+                      );
+                    });
+
                 context.justBack();
               },
               child: Row(

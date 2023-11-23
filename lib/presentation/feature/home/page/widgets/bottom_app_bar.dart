@@ -2,8 +2,6 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:scan_qr_code/app/component/icon_animation.dart';
 import 'package:scan_qr_code/app/extensions/context.dart';
-import 'package:scan_qr_code/app/extensions/spaces.dart';
-import 'package:scan_qr_code/app/extensions/typography.dart';
 import 'package:scan_qr_code/presentation/feature/home/page/widgets/qr_code_dialog.dart';
 import 'package:scan_qr_code/presentation/feature/scan_qr/models/app_scan_qr_code_params.dart';
 
@@ -87,7 +85,7 @@ class AppBottomAppBar extends StatelessWidget {
           ),
           Positioned(
             top: -35.r,
-            child: InkWell(
+            child: GestureDetector(
               onTap: () async {
                 final res = await context.navigator.pushScanQrcode(
                   AppScanQrCodeParams.none(),
