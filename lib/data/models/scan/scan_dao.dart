@@ -23,4 +23,16 @@ class ScanDao extends AppBaseDaoImpl<ScanModel> {
     }
     return entities.first;
   }
+
+  Future<void> addScanModel(Map<String, dynamic> data) async {
+    await sqlite.rawQuery(
+      'INSERT OR REPLACE INTO $tableName (id, scanType, createdAt, qrData) VALUES (?, ?, ?, ?)',
+      [
+        data['id'],
+        data['scanType'],
+        data['createdAt'],
+        data['qrData'],
+      ],
+    );
+  }
 }

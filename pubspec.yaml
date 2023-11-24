@@ -66,6 +66,7 @@ dependencies:
   loader_overlay: ^3.0.0
   collection: ^1.17.2
   url_launcher: ^6.2.1
+  uuid: ^4.2.1
 
 dev_dependencies:
   injectable_generator:

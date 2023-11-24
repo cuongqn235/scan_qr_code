@@ -6,16 +6,20 @@ part of 'scan_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ScanModel _$ScanModelFromJson(Map<String, dynamic> json) => ScanModel(
-      id: json['id'] as int?,
-      qrCodeData: json['qrCodeData'] as String,
+_$ScanModelImpl _$$ScanModelImplFromJson(Map<String, dynamic> json) =>
+    _$ScanModelImpl(
+      id: json['id'] as String,
+      scanType: json['scanType'] as String,
       createdAt: const DateTimeConverterFromString()
           .fromJson(json['createdAt'] as String),
+      qrData: json['qrData'] as String,
     );
 
-Map<String, dynamic> _$ScanModelToJson(ScanModel instance) => <String, dynamic>{
+Map<String, dynamic> _$$ScanModelImplToJson(_$ScanModelImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
-      'qrCodeData': instance.qrCodeData,
+      'scanType': instance.scanType,
       'createdAt':
           const DateTimeConverterFromString().toJson(instance.createdAt),
+      'qrData': instance.qrData,
     };

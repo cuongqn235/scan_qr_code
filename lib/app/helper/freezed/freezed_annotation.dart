@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:json_annotation/json_annotation.dart';
@@ -115,5 +116,20 @@ class ColorConverterFromString implements JsonConverter<Color, String> {
   @override
   String toJson(Color color) {
     return color.value.toString();
+  }
+}
+
+class MapConverterFromString
+    implements JsonConverter<Map<String, String>, String> {
+  const MapConverterFromString();
+
+  @override
+  Map<String, String> fromJson(String data) {
+    return json.decode(data) as Map<String, String>;
+  }
+
+  @override
+  String toJson(Map<String, String> data) {
+    return data.toString();
   }
 }

@@ -2,6 +2,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scan_qr_code/app/extensions/context.dart';
 import 'package:scan_qr_code/app/extensions/spaces.dart';
+import 'package:scan_qr_code/app/inject_dependency/inject_dependency.dart';
 import 'package:scan_qr_code/presentation/feature/history/models/history_type.dart';
 import 'package:scan_qr_code/presentation/feature/history/page/history_tab/bloc/history_tab_bloc.dart';
 import 'package:scan_qr_code/presentation/feature/history/page/history_tab/history_tab.dart';
@@ -18,10 +19,16 @@ class _HistoryPageState extends State<HistoryPage>
   late final TabController tabController;
   late final PageController pageController;
   final _listHistoryType = HistoryType.values;
+  late final List<HistoryTabBloc> _listTabBloc;
   @override
   void initState() {
     pageController = PageController();
     tabController = TabController(length: _listHistoryType.length, vsync: this);
+    _listTabBloc = _listHistoryType
+        .map(
+          (e) => getIt<HistoryTabBloc>(),
+        )
+        .toList();
     super.initState();
   }
 
@@ -78,7 +85,7 @@ class _HistoryPageState extends State<HistoryPage>
             itemCount: _listHistoryType.length,
             itemBuilder: (c, i) {
               return BlocProvider(
-                create: (context) => HistoryTabBloc(),
+                create: (context) => _listTabBloc[i],
                 child: const HistoryTab(),
               );
             },

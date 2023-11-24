@@ -6,7 +6,11 @@ import 'package:injectable/injectable.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:scan_qr_code/app/common/application/base_state.dart';
 import 'package:scan_qr_code/app/common/model/status.dart';
-import 'package:scan_qr_code/presentation/feature/scan_qr/models/scan_qr_code_data.dart';
+import 'package:scan_qr_code/app/extensions/barcode_type_extension.dart';
+import 'package:scan_qr_code/domain/entities/scan_entity.dart';
+import 'package:scan_qr_code/domain/usecases/scan/add_scan_usecase.dart';
+import 'package:scan_qr_code/presentation/feature/scan_qr/models/app_qr_code_data.dart';
+import 'package:uuid/uuid.dart';
 
 part 'app_scan_qr_code_event.dart';
 part 'app_scan_qr_code_state.dart';
@@ -14,71 +18,56 @@ part 'app_scan_qr_code_bloc.freezed.dart';
 
 @injectable
 class AppScanQrCodeBloc extends Bloc<AppScanQrCodeEvent, AppScanQrCodeState> {
-  AppScanQrCodeBloc() : super(const AppScanQrCodeState()) {
+  AppScanQrCodeBloc(this._addJokeFeedbackUseCase)
+      : super(const AppScanQrCodeState()) {
     // event mapping
     on<CaptureScanQrcode>(_onCaptureScanQrcode);
     on<AppScanQrCodeEventClearResult>(_onClearResult);
   }
-
+  final AddJokeFeedbackUseCase _addJokeFeedbackUseCase;
   FutureOr<void> _onCaptureScanQrcode(
       CaptureScanQrcode event, Emitter<AppScanQrCodeState> emit) async {
     try {
+      AppQrCodeData? data;
       switch (event.data.type) {
         case BarcodeType.email:
-          emit(state.copyWith(
-            data: ScanQrCodeData.email(
-              address: event.data.email?.address,
-              body: event.data.email?.body,
-              subject: event.data.email?.subject,
-            ),
-            correctFormat: true,
-          ));
+          data = AppQrCodeData.email(
+            address: event.data.email?.address,
+            body: event.data.email?.body,
+            subject: event.data.email?.subject,
+          );
+
           break;
         case BarcodeType.phone:
-          emit(state.copyWith(
-            data: ScanQrCodeData.phone(
-              number: event.data.phone?.number,
-            ),
-            correctFormat: true,
-          ));
+          data = AppQrCodeData.phone(
+            number: event.data.phone?.number,
+          );
           break;
         case BarcodeType.sms:
           assert(event.data.sms != null, 'sms data is null');
-          emit(state.copyWith(
-            data: ScanQrCodeData.sms(
-              message: event.data.sms?.message,
-              phoneNumber: event.data.sms!.phoneNumber,
-            ),
-            correctFormat: true,
-          ));
+          data = AppQrCodeData.sms(
+            message: event.data.sms?.message,
+            phoneNumber: event.data.sms!.phoneNumber,
+          );
           break;
         case BarcodeType.url:
           assert(event.data.url != null, 'url data is null');
-          emit(state.copyWith(
-            data: ScanQrCodeData.urlBookmark(
-              title: event.data.url?.title,
-              url: event.data.url!.url,
-            ),
-            correctFormat: true,
-          ));
+          data = AppQrCodeData.urlBookmark(
+            title: event.data.url?.title,
+            url: event.data.url!.url,
+          );
           break;
         case BarcodeType.wifi:
-          emit(state.copyWith(
-            data: ScanQrCodeData.wifi(
-              encryptionType: event.data.wifi?.encryptionType.rawValue,
-              ssid: event.data.wifi?.ssid,
-              password: event.data.wifi?.password,
-            ),
-            correctFormat: true,
-          ));
+          data = AppQrCodeData.wifi(
+            encryptionType: event.data.wifi?.encryptionType.rawValue,
+            ssid: event.data.wifi?.ssid,
+            password: event.data.wifi?.password,
+          );
           break;
         case BarcodeType.text:
-          emit(state.copyWith(
-            data: ScanQrCodeData.text(
-              text: event.data.displayValue,
-            ),
-            correctFormat: true,
-          ));
+          data = AppQrCodeData.text(
+            text: event.data.displayValue,
+          );
           break;
         case BarcodeType.unknown:
         case BarcodeType.contactInfo:
@@ -87,11 +76,20 @@ class AppScanQrCodeBloc extends Bloc<AppScanQrCodeEvent, AppScanQrCodeState> {
         case BarcodeType.geo:
         case BarcodeType.calendarEvent:
         case BarcodeType.driverLicense:
-          emit(state.copyWith(
-            correctFormat: false,
-          ));
           break;
       }
+      if (data == null) {
+        emit(state.copyWith(
+          correctFormat: false,
+        ));
+      } else {
+        await addScanEntity(event.data.type, data);
+        emit(state.copyWith(
+          data: data,
+          correctFormat: true,
+        ));
+      }
+
       emit(state.copyWith(
         isScanable: true,
       ));
@@ -105,6 +103,18 @@ class AppScanQrCodeBloc extends Bloc<AppScanQrCodeEvent, AppScanQrCodeState> {
         data: null,
       ));
     }
+  }
+
+  Future<void> addScanEntity(BarcodeType type, AppQrCodeData data) async {
+    final uuid = const Uuid().v4();
+    await _addJokeFeedbackUseCase.execute(
+      ScanEntity(
+        id: uuid,
+        scanType: type.value,
+        createdAt: DateTime.now(),
+        qrData: data.toEntity(),
+      ),
+    );
   }
 
   FutureOr<void> _onClearResult(

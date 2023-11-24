@@ -1,6 +1,7 @@
 ﻿import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scan_qr_code/app/common/page/base_page.dart';
+import 'package:scan_qr_code/app/router/app_page.dart';
 import 'package:scan_qr_code/app/router/app_routes.dart';
 import 'package:scan_qr_code/presentation/feature/history/bloc/history_bloc.dart';
 import 'package:scan_qr_code/presentation/feature/history/page/history_page.dart';
@@ -12,16 +13,15 @@ import 'package:scan_qr_code/presentation/feature/scan_qr/models/app_scan_qr_cod
 import 'package:scan_qr_code/presentation/feature/scan_qr/page/app_scan_qr_code.dart';
 
 class AppRouter {
-  // static final GlobalKey<NavigatorState> _shellNavigatorKey =
-  //     GlobalKey<NavigatorState>(debugLabel: 'shell');
+  static final rootNavigatorKey = GlobalKey<NavigatorState>();
 
   static List<RouteBase> get routers => <RouteBase>[
         GoRoute(
           name: AppRoutes.onBoard.name,
           path: AppRoutes.onBoard.path,
           pageBuilder: (context, state) {
-            return const CupertinoPage(
-              child: OnBoardPage(),
+            return AppPage.open(
+              child: const OnBoardPage(),
             );
           },
         ),
@@ -29,7 +29,7 @@ class AppRouter {
           name: AppRoutes.home.name,
           path: AppRoutes.home.path,
           pageBuilder: (context, state) {
-            return CupertinoPage(
+            return AppPage.open(
               key: state.pageKey,
               child: BasePage<HomeBloc, HomeState>(page: const HomePage()),
             );
@@ -40,7 +40,7 @@ class AppRouter {
           path: AppRoutes.scanQrCode.path,
           pageBuilder: (context, state) {
             final params = state.extra as AppScanQrCodeParams;
-            return CupertinoPage(
+            return AppPage.open(
               key: state.pageKey,
               child: BasePage<AppScanQrCodeBloc, AppScanQrCodeState>(
                   page: AppScanQrCodePage(
@@ -53,7 +53,7 @@ class AppRouter {
           name: AppRoutes.history.name,
           path: AppRoutes.history.path,
           pageBuilder: (context, state) {
-            return CupertinoPage(
+            return AppPage.open(
               key: state.pageKey,
               child: BasePage<HistoryBloc, HistoryState>(
                   page: const HistoryPage()),

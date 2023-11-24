@@ -67,6 +67,7 @@ class __MyAppState extends State<_MyApp> {
     processIntital = Completer();
     redirectController = StreamController.broadcast();
     appRouter = GoRouter(
+        navigatorKey: AppRouter.rootNavigatorKey,
         debugLogDiagnostics: kDebugMode,
         initialLocation: '/',
         errorBuilder: (context, state) {

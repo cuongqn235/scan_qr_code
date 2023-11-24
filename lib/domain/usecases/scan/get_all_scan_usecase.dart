@@ -1,21 +1,20 @@
 ﻿import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:scan_qr_code/app/core/usecases/data_usecase.dart';
-import 'package:scan_qr_code/app/core/usecases/pram_usecase.dart';
+import 'package:scan_qr_code/app/core/usecases/no_param_usecase.dart';
 import 'package:scan_qr_code/domain/entities/scan_entity.dart';
 import 'package:scan_qr_code/domain/repositories/scan/i_scan_repository.dart';
 
 @injectable
-class AddJokeFeedbackUseCase
-    extends ParamUseCase<DataUseCase<Unit>, ScanEntity> {
-  final IScanRepository _scanRepository;
-  AddJokeFeedbackUseCase(this._scanRepository);
+class GetAllJokeUseCase extends NoParamUseCase<DataUseCase<List<ScanEntity>>> {
+  final IScanRepository _iScanRepository;
+  GetAllJokeUseCase(this._iScanRepository);
 
   @override
-  Future<DataUseCase<Unit>> execute(ScanEntity params) async {
+  Future<DataUseCase<List<ScanEntity>>> execute() async {
     try {
-      await _scanRepository.addScan(params);
-      return right(unit);
+      final data = await _iScanRepository.getAllScan();
+      return right(data);
     } on Exception catch (e) {
       return left(e);
     }

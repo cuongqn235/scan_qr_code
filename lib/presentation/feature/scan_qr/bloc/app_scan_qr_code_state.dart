@@ -5,7 +5,7 @@ class AppScanQrCodeState with _$AppScanQrCodeState implements BaseState {
   const factory AppScanQrCodeState({
     @Default(Status.idle()) Status status,
     bool? correctFormat,
-    ScanQrCodeData? data,
+    AppQrCodeData? data,
     @Default(true) bool isScanable,
     @Default(false) bool isWrite,
   }) = _AppScanQrCodeState;

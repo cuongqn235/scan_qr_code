@@ -2,12 +2,12 @@
 import 'package:go_router/go_router.dart';
 import 'package:scan_qr_code/app/router/app_routes.dart';
 import 'package:scan_qr_code/presentation/feature/scan_qr/models/app_scan_qr_code_params.dart';
-import 'package:scan_qr_code/presentation/feature/scan_qr/models/scan_qr_code_data.dart';
+import 'package:scan_qr_code/presentation/feature/scan_qr/models/app_qr_code_data.dart';
 
 abstract class AppNavigator {
   void pushOnBoard();
   void pushHome();
-  Future<ScanQrCodeData?> pushScanQrcode(AppScanQrCodeParams params);
+  Future<AppQrCodeData?> pushScanQrcode(AppScanQrCodeParams params);
   void pushHistory();
 }
 
@@ -33,8 +33,8 @@ class AppNavigatorImpl implements AppNavigator {
   }
 
   @override
-  Future<ScanQrCodeData?> pushScanQrcode(AppScanQrCodeParams params) async {
-    final res = await context.push<ScanQrCodeData?>(
+  Future<AppQrCodeData?> pushScanQrcode(AppScanQrCodeParams params) async {
+    final res = await context.push<AppQrCodeData?>(
       AppRoutes.scanQrCode.path,
       extra: params,
     );

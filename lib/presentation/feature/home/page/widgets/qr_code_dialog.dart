@@ -3,15 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:scan_qr_code/app/extensions/context.dart';
 import 'package:scan_qr_code/app/extensions/spaces.dart';
 import 'package:scan_qr_code/app/extensions/typography.dart';
-import 'package:scan_qr_code/presentation/feature/scan_qr/models/scan_qr_code_data.dart';
+import 'package:scan_qr_code/presentation/feature/scan_qr/models/app_qr_code_data.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class QrCodeDialog extends StatelessWidget {
   const QrCodeDialog({super.key, required this.data});
-  final ScanQrCodeData data;
+  final AppQrCodeData data;
   static Future<void> open(
     BuildContext context, {
-    required ScanQrCodeData data,
+    required AppQrCodeData data,
   }) async {
     return showDialog<void>(
       barrierDismissible: false,
