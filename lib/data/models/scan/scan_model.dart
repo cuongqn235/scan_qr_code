@@ -10,6 +10,7 @@ class ScanModel extends AppBaseModel with _$ScanModel {
   factory ScanModel({
     required String id,
     required String scanType,
+    @Default(0) int isAdmin,
     @DateTimeConverterFromString() required DateTime createdAt,
     required String qrData,
   }) = _ScanModel;

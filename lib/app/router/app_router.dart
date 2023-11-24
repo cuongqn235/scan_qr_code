@@ -1,8 +1,16 @@
-﻿import 'package:flutter/cupertino.dart';
+﻿import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scan_qr_code/app/common/page/base_page.dart';
+import 'package:scan_qr_code/app/extensions/async.dart';
 import 'package:scan_qr_code/app/router/app_page.dart';
 import 'package:scan_qr_code/app/router/app_routes.dart';
+import 'package:scan_qr_code/app/router/go_router_refresh_stream.dart';
+import 'package:scan_qr_code/presentation/bloc/app_bloc.dart';
+import 'package:scan_qr_code/presentation/feature/error/error_page.dart';
 import 'package:scan_qr_code/presentation/feature/history/bloc/history_bloc.dart';
 import 'package:scan_qr_code/presentation/feature/history/page/history_page.dart';
 import 'package:scan_qr_code/presentation/feature/home/bloc/home_bloc.dart';
@@ -14,14 +22,42 @@ import 'package:scan_qr_code/presentation/feature/scan_qr/page/app_scan_qr_code.
 
 class AppRouter {
   static final rootNavigatorKey = GlobalKey<NavigatorState>();
-
-  static List<RouteBase> get routers => <RouteBase>[
+  static GoRouter setup(
+    StreamController redirectController, {
+    Iterable<Stream<dynamic>>? streams,
+  }) {
+    return GoRouter(
+      debugLogDiagnostics: kDebugMode,
+      initialLocation: '/',
+      errorBuilder: (context, state) {
+        if (kDebugMode) {
+          print(state.error);
+        }
+        return const ErrorPage();
+      },
+      refreshListenable: GoRouterRefreshStream(
+          redirectController.stream.merge([...(streams ?? [])])),
+      redirect: (context, state) async {
+        final isFirstLaunch = context.read<AppBloc>().state.isFirstLaunch;
+        if (isFirstLaunch == true) {
+          return AppRoutes.onBoard.path;
+        }
+        // return null;
+        if (state.matchedLocation.compareTo('/') != 0 &&
+            state.matchedLocation.compareTo(AppRoutes.onBoard.path) != 0) {
+          return state.fullPath;
+        }
+        return AppRoutes.home.path;
+      },
+      routes: <RouteBase>[
         GoRoute(
           name: AppRoutes.onBoard.name,
           path: AppRoutes.onBoard.path,
           pageBuilder: (context, state) {
-            return AppPage.open(
-              child: const OnBoardPage(),
+            return AppPage.animatedPage(
+              context,
+              state,
+              const OnBoardPage(),
             );
           },
         ),
@@ -29,9 +65,10 @@ class AppRouter {
           name: AppRoutes.home.name,
           path: AppRoutes.home.path,
           pageBuilder: (context, state) {
-            return AppPage.open(
-              key: state.pageKey,
-              child: BasePage<HomeBloc, HomeState>(page: const HomePage()),
+            return AppPage.animatedPage(
+              context,
+              state,
+              BasePage<HomeBloc, HomeState>(page: const HomePage()),
             );
           },
         ),
@@ -40,9 +77,10 @@ class AppRouter {
           path: AppRoutes.scanQrCode.path,
           pageBuilder: (context, state) {
             final params = state.extra as AppScanQrCodeParams;
-            return AppPage.open(
-              key: state.pageKey,
-              child: BasePage<AppScanQrCodeBloc, AppScanQrCodeState>(
+            return AppPage.animatedPage(
+              context,
+              state,
+              BasePage<AppScanQrCodeBloc, AppScanQrCodeState>(
                   page: AppScanQrCodePage(
                 params: params,
               )),
@@ -53,12 +91,14 @@ class AppRouter {
           name: AppRoutes.history.name,
           path: AppRoutes.history.path,
           pageBuilder: (context, state) {
-            return AppPage.open(
-              key: state.pageKey,
-              child: BasePage<HistoryBloc, HistoryState>(
-                  page: const HistoryPage()),
+            return AppPage.animatedPage(
+              context,
+              state,
+              BasePage<HistoryBloc, HistoryState>(page: const HistoryPage()),
             );
           },
         ),
-      ];
+      ],
+    );
+  }
 }

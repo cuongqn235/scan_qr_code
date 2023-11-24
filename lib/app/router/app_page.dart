@@ -1,17 +1,19 @@
-﻿import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
+﻿import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AppPage {
-  static Page open<T>({
-    LocalKey? key,
-    required Widget child,
-  }) {
-    if (Platform.isAndroid) {
-      return MaterialPage<T>(child: child, key: key);
-    } else {
-      return CupertinoPage<T>(child: child, key: key);
-    }
+  static animatedPage(
+      BuildContext context, GoRouterState state, Widget widget) {
+    return CustomTransitionPage(
+      key: state.pageKey,
+      child: widget,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+          child: child,
+        );
+      },
+    );
   }
 }

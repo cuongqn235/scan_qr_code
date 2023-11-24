@@ -44,13 +44,13 @@ class QrCodeDataEntity with _$QrCodeDataEntity {
 extension QrCodeDataEntityMapper on QrCodeDataEntity {
   String get toValue => when(
         email: (address, body, subject) =>
-            '${address.toBase64()}|${body.toBase64()}|${subject.toBase64()}',
-        phone: (number) => number.toBase64(),
+            '${address.toBase64}|${body.toBase64}|${subject.toBase64}',
+        phone: (number) => number.toBase64,
         sms: (message, phoneNumber) =>
-            '${message.toBase64()}|${phoneNumber.toBase64()}',
-        urlBookmark: (title, url) => '${title.toBase64()}|${url.toBase64()}}',
+            '${message.toBase64}|${phoneNumber.toBase64}',
+        urlBookmark: (title, url) => '${title.toBase64}|${url.toBase64}',
         wifi: (encryptionType, ssid, password) =>
-            '${encryptionType.toString().toBase64()}|${ssid.toBase64()}|${password.toBase64()}',
-        text: (text) => text.toBase64(),
+            '${encryptionType.toString().toBase64}|${ssid.toBase64}|${password.toBase64}',
+        text: (text) => text.toBase64,
       );
 }

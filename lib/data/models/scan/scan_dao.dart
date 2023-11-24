@@ -24,6 +24,16 @@ class ScanDao extends AppBaseDaoImpl<ScanModel> {
     return entities.first;
   }
 
+  Future<List<ScanModel>> fetchScanModelByIsAdmin(bool isAdmin) async {
+    final result = await sqlite.rawQuery(
+      'SELECT * FROM $tableName WHERE isAdmin = ?',
+      [isAdmin],
+    );
+    final entities = result.map(jsonToEntity).toList();
+
+    return entities;
+  }
+
   Future<void> addScanModel(Map<String, dynamic> data) async {
     await sqlite.rawQuery(
       'INSERT OR REPLACE INTO $tableName (id, scanType, createdAt, qrData) VALUES (?, ?, ?, ?)',

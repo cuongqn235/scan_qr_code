@@ -111,6 +111,7 @@ class AppScanQrCodeBloc extends Bloc<AppScanQrCodeEvent, AppScanQrCodeState> {
       ScanEntity(
         id: uuid,
         scanType: type.value,
+        isAdmin: false,
         createdAt: DateTime.now(),
         qrData: data.toEntity(),
       ),

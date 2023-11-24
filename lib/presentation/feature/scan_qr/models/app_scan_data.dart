@@ -10,6 +10,7 @@ class AppScanData with _$AppScanData {
   factory AppScanData({
     required String id,
     required String scanType,
+    required bool isAdmin,
     required DateTime createdAt,
     required AppQrCodeData data,
   }) = _AppScanData;
@@ -57,6 +58,7 @@ class AppScanData with _$AppScanData {
     return AppScanData(
       id: entity.id,
       scanType: entity.scanType,
+      isAdmin: entity.isAdmin,
       createdAt: entity.createdAt,
       data: data,
     );
@@ -68,6 +70,7 @@ extension AppScanDataExtension on AppScanData {
     return ScanEntity(
       id: id,
       scanType: scanType,
+      isAdmin: isAdmin,
       createdAt: createdAt,
       qrData: data.map(
         email: (value) => QrCodeDataEntity.email(

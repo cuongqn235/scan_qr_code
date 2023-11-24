@@ -13,7 +13,10 @@ part 'history_tab_bloc.freezed.dart';
 
 @injectable
 class HistoryTabBloc extends Bloc<HistoryTabEvent, HistoryTabState> {
-  HistoryTabBloc(this._getAllJokeUseCase) : super(const HistoryTabState()) {
+  HistoryTabBloc(
+    this._getAllJokeUseCase,
+    @factoryParam HistoryTabState? state,
+  ) : super(state ?? const HistoryTabState()) {
     on<HistoryTabEventOnStart>(_onStart);
   }
   final GetAllJokeUseCase _getAllJokeUseCase;
@@ -21,19 +24,30 @@ class HistoryTabBloc extends Bloc<HistoryTabEvent, HistoryTabState> {
   FutureOr<void> _onStart(
       HistoryTabEventOnStart event, Emitter<HistoryTabState> emit) async {
     try {
-      emit(
-        state.copyWith(
-          status: const Status.loading(),
-        ),
+      if (event.pageKey == 0) {
+        emit(
+          state.copyWith(
+            currentPage: 0,
+            canLoadMore: true,
+            newScans: null,
+          ),
+        );
+      }
+      final res = await _getAllJokeUseCase.execute(
+        state.isAdmin,
       );
-      final res = await _getAllJokeUseCase.execute();
       final data = res.fold(
         (l) => throw l,
         (r) => r.map(AppScanData.fromEntity).toList(),
       );
+      final scans = List<AppScanData>.from(state.scans)..addAll(data);
+      final canLoadMore = scans.length < data.length;
       emit(
         state.copyWith(
           scans: data,
+          newScans: data,
+          canLoadMore: canLoadMore,
+          currentPage: event.pageKey,
         ),
       );
     } catch (e) {

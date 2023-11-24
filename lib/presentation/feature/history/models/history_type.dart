@@ -1,8 +1,12 @@
 ﻿enum HistoryType {
-  all('Tất cả'),
-  scanned('Đã quét'),
-  created('Đã tạo');
+  all('Tất cả', null),
+  scanned('Đã quét', false),
+  created('Đã tạo', true);
 
   final String title;
-  const HistoryType(this.title);
+  final bool? value;
+  const HistoryType(
+    this.title,
+    this.value,
+  );
 }

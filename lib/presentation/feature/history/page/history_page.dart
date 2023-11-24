@@ -26,7 +26,11 @@ class _HistoryPageState extends State<HistoryPage>
     tabController = TabController(length: _listHistoryType.length, vsync: this);
     _listTabBloc = _listHistoryType
         .map(
-          (e) => getIt<HistoryTabBloc>(),
+          (e) => getIt<HistoryTabBloc>(
+            param1: HistoryTabState(
+              isAdmin: e.value,
+            ),
+          ),
         )
         .toList();
     super.initState();

@@ -15,6 +15,7 @@ class ScanRepository implements IScanRepository {
     final model = ScanModel(
       id: entity.id,
       scanType: entity.scanType,
+      isAdmin: entity.isAdmin ? 1 : 0,
       createdAt: entity.createdAt,
       qrData: entity.qrData.toValue,
     );
@@ -24,8 +25,13 @@ class ScanRepository implements IScanRepository {
   }
 
   @override
-  Future<List<ScanEntity>> getAllScan() async {
-    final res = await _scanDao.findAll();
+  Future<List<ScanEntity>> getAllScan(bool? input) async {
+    late List<ScanModel> res;
+    if (input == null) {
+      res = await _scanDao.findAll();
+    } else {
+      res = await _scanDao.fetchScanModelByIsAdmin(input);
+    }
     final scanEntities = res.map(ScanEntity.fromModel).toList();
     return scanEntities;
   }

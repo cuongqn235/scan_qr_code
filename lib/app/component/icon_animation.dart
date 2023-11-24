@@ -67,23 +67,23 @@ class _IconAnimationState extends State<IconAnimation>
           brightness == Brightness.dark ? Brightness.light : Brightness.dark;
     }
     late Widget child;
-    switch (brightness) {
-      case Brightness.dark:
-        child = (widget.isDisableScanLine
-                ? Assets.images.icScanDart
-                : Assets.images.splashDark)
-            .image(
-          width: widget.iconSize,
-          height: widget.iconSize,
-        );
-      case Brightness.light:
-        child = (widget.isDisableScanLine
-                ? Assets.images.icScanLight
-                : Assets.images.splashLight)
-            .image(
-          width: widget.iconSize,
-          height: widget.iconSize,
-        );
+
+    if (context.isDark) {
+      child = (widget.isDisableScanLine
+              ? Assets.images.icScanDart
+              : Assets.images.splashDark)
+          .image(
+        width: widget.iconSize,
+        height: widget.iconSize,
+      );
+    } else {
+      child = (widget.isDisableScanLine
+              ? Assets.images.icScanLight
+              : Assets.images.splashLight)
+          .image(
+        width: widget.iconSize,
+        height: widget.iconSize,
+      );
     }
     if (widget.isEnableAnimationScanLine) {
       return AnimatedBuilder(

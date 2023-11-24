@@ -1,19 +1,14 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart' as dartz;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'package:scan_qr_code/app/extensions/async.dart';
+import 'package:scan_qr_code/app/extensions/context.dart';
 import 'package:scan_qr_code/app/inject_dependency/inject_dependency.dart';
 import 'package:scan_qr_code/app/router/app_router.dart';
-import 'package:scan_qr_code/app/router/app_routes.dart';
-import 'package:scan_qr_code/app/router/go_router_refresh_stream.dart';
 import 'package:scan_qr_code/app/theme/theme.dart';
 import 'package:scan_qr_code/presentation/bloc/app_bloc.dart';
-import 'package:scan_qr_code/presentation/feature/error/error_page.dart';
 import 'package:scan_qr_code/presentation/feature/splash/splash_page.dart';
 import 'package:scan_qr_code/presentation/initial/initial_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,7 +40,7 @@ class App extends StatelessWidget {
   }
 }
 
-late final GoRouter appRouter;
+// late final GoRouter appRouter;
 
 class _MyApp extends StatefulWidget {
   const _MyApp({super.key});
@@ -66,45 +61,6 @@ class __MyAppState extends State<_MyApp> {
     appBloc = context.read<AppBloc>();
     processIntital = Completer();
     redirectController = StreamController.broadcast();
-    appRouter = GoRouter(
-        navigatorKey: AppRouter.rootNavigatorKey,
-        debugLogDiagnostics: kDebugMode,
-        initialLocation: '/',
-        errorBuilder: (context, state) {
-          if (kDebugMode) {
-            print(state.error);
-          }
-          return const ErrorPage();
-        },
-        refreshListenable:
-            GoRouterRefreshStream(redirectController.stream.merge([])),
-        redirect: (context, state) async {
-          if (appBloc.state.isFirstLaunch == true) {
-            return AppRoutes.onBoard.path;
-          }
-          // else if (appBloc.state.isFirstLaunch == false) {
-          //   // final allRoutes = AppRoutes.values
-          //   //     .where(
-          //   //       (element) => ![
-          //   //         AppRoutes.onBoard,
-          //   //       ].contains(element),
-          //   //     )
-          //   //     .map((e) => e.path)
-          //   //     .toList();
-          //   // final path = allRoutes.firstWhereOrNull(
-          //   //   (element) => element == state.fullPath,
-          //   // );
-          //   // return path ?? AppRoutes.home.path;
-
-          //   return AppRoutes.home.path;
-          // }
-          if (state.matchedLocation.compareTo('/') != 0 &&
-              state.matchedLocation.compareTo(AppRoutes.onBoard.path) != 0) {
-            return state.fullPath;
-          }
-          return AppRoutes.home.path;
-        },
-        routes: AppRouter.routers);
     intitial();
   }
 
@@ -134,10 +90,10 @@ class __MyAppState extends State<_MyApp> {
         ),
         BlocListener<AppBloc, AppState>(
           listenWhen: (previous, current) =>
-              previous.isFirstLaunch != current.isFirstLaunch,
+              previous.isFirstLaunch != current.isFirstLaunch &&
+              current.isFirstLaunch == false,
           listener: (context, state) {
             redirectController.add(dartz.unit);
-            // appRouter.refresh();
           },
         ),
       ],
@@ -147,9 +103,10 @@ class __MyAppState extends State<_MyApp> {
         themeMode: ThemeMode.system,
         theme: AppTheme.lightTheme(context),
         darkTheme: AppTheme.darkTheme(context),
-        routeInformationParser: appRouter.routeInformationParser,
-        routerDelegate: appRouter.routerDelegate,
-        routeInformationProvider: appRouter.routeInformationProvider,
+        // routeInformationParser: appRouter.routeInformationParser,
+        // routerDelegate: appRouter.routerDelegate,
+        // routeInformationProvider: appRouter.routeInformationProvider,
+        routerConfig: AppRouter.setup(redirectController),
         builder: (context, child) {
           return LoaderOverlay(
             child: BlocSelector<InitialCubit, InitialState, bool>(

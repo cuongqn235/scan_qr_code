@@ -1,4 +1,5 @@
 ﻿import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:scan_qr_code/app/gen/assets.gen.dart';
 
 extension BarcodeTypeExtension on BarcodeType {
   String get value {
@@ -36,6 +37,25 @@ extension BarcodeTypeExtension on BarcodeType {
         return BarcodeType.text;
       default:
         return BarcodeType.text;
+    }
+  }
+
+  SvgGenImage get getIcon {
+    switch (this) {
+      case BarcodeType.email:
+        return Assets.icons.icEmail;
+      case BarcodeType.phone:
+        return Assets.icons.icPhone;
+      case BarcodeType.sms:
+        return Assets.icons.icSms;
+      case BarcodeType.url:
+        return Assets.icons.icUrl;
+      case BarcodeType.wifi:
+        return Assets.icons.icWifi;
+      case BarcodeType.text:
+        return Assets.icons.icText;
+      default:
+        return Assets.icons.icText;
     }
   }
 }
