@@ -1,4 +1,5 @@
-﻿import 'package:flutter/cupertino.dart';
+﻿import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 
 class AppText extends StatelessWidget {
   const AppText(
@@ -15,7 +16,7 @@ class AppText extends StatelessWidget {
     return Visibility(
       visible: (value ?? '').isNotEmpty,
       child: Text(
-        '$title: $value',
+        '${title.tr()}: $value',
         style: style,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,

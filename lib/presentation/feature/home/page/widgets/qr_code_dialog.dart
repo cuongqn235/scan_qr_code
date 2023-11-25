@@ -1,11 +1,9 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:scan_qr_code/app/extensions/context.dart';
-import 'package:scan_qr_code/app/extensions/spaces.dart';
-import 'package:scan_qr_code/app/extensions/typography.dart';
 import 'package:scan_qr_code/presentation/feature/history/page/history_tab/history_tab_item.dart';
 import 'package:scan_qr_code/presentation/feature/scan_qr/models/app_qr_code_data.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class QrCodeDialog extends StatelessWidget {
   const QrCodeDialog({super.key, required this.data});
@@ -45,7 +43,7 @@ class QrCodeDialog extends StatelessWidget {
         ),
         TextButton(
           child: Text(
-            'Back',
+            'Back'.tr(),
             style: context.textTheme.titleSmall
                 ?.copyWith(color: context.colorScheme.error),
           ),

@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scan_qr_code/app/extensions/context.dart';
 import 'package:scan_qr_code/app/extensions/spaces.dart';
@@ -47,7 +48,7 @@ class _HistoryPageState extends State<HistoryPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('History'),
+        title: const Text('History').tr(),
       ),
       body: Column(children: [
         SizedBox(
@@ -70,7 +71,7 @@ class _HistoryPageState extends State<HistoryPage>
                       fontWeight: FontWeight.w700,
                       // color: context.appColorScheme.cursor,
                     ),
-                  ),
+                  ).tr(),
                 ),
               ),
             ],

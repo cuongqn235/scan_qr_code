@@ -1,7 +1,7 @@
 ﻿enum HistoryType {
-  all('Tất cả', null),
-  scanned('Đã quét', false),
-  created('Đã tạo', true);
+  all('All', null),
+  scanned('Scanned', false),
+  created('Created', true);
 
   final String title;
   final bool? value;

@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart' as dartz;
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'package:scan_qr_code/app/extensions/context.dart';
 import 'package:scan_qr_code/app/inject_dependency/inject_dependency.dart';
 import 'package:scan_qr_code/app/router/app_router.dart';
 import 'package:scan_qr_code/app/theme/theme.dart';
@@ -105,7 +105,10 @@ class __MyAppState extends State<_MyApp> {
         darkTheme: AppTheme.darkTheme(context),
         // routeInformationParser: appRouter.routeInformationParser,
         // routerDelegate: appRouter.routerDelegate,
-        // routeInformationProvider: appRouter.routeInformationProvider,
+        // routeInformationProvider: appRouter.routeInformationProvider,\
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
         routerConfig: AppRouter.setup(redirectController),
         builder: (context, child) {
           return LoaderOverlay(

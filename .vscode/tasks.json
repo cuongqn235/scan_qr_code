@@ -1,0 +1,40 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "flutter",
+            "command": "flutter",
+            "args": [
+                "build",
+                "appbundle",
+                "--release",
+                "--flavor",
+                "dev",
+                "-t",
+                "lib/main_dev.dart",
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "label": "flutter: flutter build appbundle dev",
+            "detail": ""
+        },
+        {
+            "type": "flutter",
+            "command": "flutter",
+            "args": [
+                "build",
+                "appbundle",
+                "--verbose",
+                "--release",
+                "-t",
+                "lib/main_prod.dart",
+                "--flavor",
+                "prod",
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "label": "flutter: flutter build appbundle prod",
+            "detail": ""
+        }
+    ]
+}

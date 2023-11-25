@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:scan_qr_code/app/component/popup/permission/common_bottom_popup_permission.dart';
@@ -21,9 +22,8 @@ class CameraBottomPopupPermission {
       enableDrag: isDismissible,
       context: context,
       child: CommonBottomPopupPermission(
-        title: 'FPHost chưa có quyền truy cập "Camera".',
-        subTitle:
-            'Cấp quyền truy cập camera để sử dụng tính năng chụp ảnh và quét mã QR',
+        title: 'TitleCameraPermission'.tr(),
+        subTitle: 'SubTitleCameraPermission'.tr(),
         tutorial: Column(
           children: [
             Row(
@@ -36,11 +36,11 @@ class CameraBottomPopupPermission {
                 Expanded(
                   child: RichText(
                     text: TextSpan(
-                      text: 'Mở ứng dụng',
+                      text: 'OpenTheApplication'.tr(),
                       style: context.textTheme.bodyLarge,
                       children: [
                         TextSpan(
-                          text: ' Cài đặt',
+                          text: ' ${'Setting'.tr()}',
                           style: context.textTheme.titleSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -62,11 +62,11 @@ class CameraBottomPopupPermission {
                 Expanded(
                   child: RichText(
                     text: TextSpan(
-                      text: 'Chọn',
+                      text: 'Select'.tr(),
                       style: context.textTheme.bodyLarge,
                       children: [
                         TextSpan(
-                          text: ' “Quyền riêng tư & Bảo mật”',
+                          text: 'Privacy&Security'.tr(),
                           style: context.textTheme.titleSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -88,11 +88,11 @@ class CameraBottomPopupPermission {
                 Expanded(
                   child: RichText(
                     text: TextSpan(
-                      text: 'Chọn',
+                      text: 'Select'.tr(),
                       style: context.textTheme.bodyLarge,
                       children: [
                         TextSpan(
-                          text: ' “Camera”',
+                          text: ' "${'Camera'.tr()}"',
                           style: context.textTheme.titleSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -114,17 +114,17 @@ class CameraBottomPopupPermission {
                 Expanded(
                   child: RichText(
                     text: TextSpan(
-                      text: 'Chọn phép ứng dụng',
+                      text: 'SelectApplicationPermission'.tr(),
                       style: context.textTheme.bodyLarge,
                       children: [
                         TextSpan(
-                          text: ' FPHouse ',
+                          text: ' Scan QR Code ',
                           style: context.textTheme.titleSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         TextSpan(
-                          text: 'truy cập camera',
+                          text: 'CameraAccess'.tr(),
                           style: context.textTheme.bodyLarge,
                         ),
                       ],

@@ -1,4 +1,5 @@
-﻿import 'package:flutter/widgets.dart';
+﻿import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:scan_qr_code/app/extensions/context.dart';
 import 'package:scan_qr_code/app/extensions/spaces.dart';
@@ -29,7 +30,7 @@ class HistoryTabNotFound extends StatelessWidget {
         Text(
           'Not found',
           style: context.textTheme.titleMedium,
-        ),
+        ).tr(),
       ],
     );
   }

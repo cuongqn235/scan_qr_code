@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:scan_qr_code/app/component/button/solid_button.dart';
@@ -40,17 +41,17 @@ class OnBoardPage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Text(
-                'Go and enjoy our features for free and make your life easy with us.',
+                'GoAndEnjoyOurFeaturesForFreeAndMakeYourLifeEasyWithUs',
                 textAlign: TextAlign.center,
                 style:
                     context.textTheme.bodyMedium?.copyWith(color: colorWhite),
-              ),
+              ).tr(),
             ),
             spaceH16,
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: AppSolidButton.medium(
-                'Let’s Start',
+                'LetUsStart'.tr(),
                 onPressed: () {
                   context.read<AppBloc>().add(AppEventEndOnboard());
                   // context.navigator.pushHome();

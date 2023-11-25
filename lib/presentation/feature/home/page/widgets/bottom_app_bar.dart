@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:scan_qr_code/app/component/icon_animation.dart';
@@ -48,17 +49,16 @@ class AppBottomAppBar extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         Fluttertoast.showToast(
-                          msg: 'Coming soon',
+                          msg: 'ComingSoon'.tr(),
                           toastLength: Toast.LENGTH_SHORT,
                         );
                       },
-                      child: const Column(
-                        // crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Column(
                         children: [
-                          Icon(Icons.qr_code_2_outlined),
-                          Text(
+                          const Icon(Icons.qr_code_2_outlined),
+                          const Text(
                             'Generate',
-                          ),
+                          ).tr(),
                         ],
                       ),
                     ),
@@ -77,13 +77,13 @@ class AppBottomAppBar extends StatelessWidget {
                       onTap: () {
                         context.navigator.pushHistory();
                       },
-                      child: const Column(
+                      child: Column(
                         // crossAxisAlignment: CrossAxisAlignment.enced,
                         children: [
-                          Icon(Icons.history),
-                          Text(
+                          const Icon(Icons.history),
+                          const Text(
                             'History',
-                          ),
+                          ).tr(),
                         ],
                       ),
                     ),

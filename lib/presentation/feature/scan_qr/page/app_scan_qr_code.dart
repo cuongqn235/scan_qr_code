@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -78,8 +79,8 @@ class _AppScanQrCodePageState extends State<AppScanQrCodePage> {
               p.correctFormat != c.correctFormat && c.correctFormat == false,
           listener: (context, state) {
             context.showAlert(
-                content: 'Mã QR không đúng hoặc đã hết hạn',
-                title: 'Thông báo',
+                content: 'TheQRCodeIsIncorrectOrHasExpired'.tr(),
+                title: 'Notification'.tr(),
                 onTapConfirmButton: () {
                   setState(() {
                     isScanSuccess = false;

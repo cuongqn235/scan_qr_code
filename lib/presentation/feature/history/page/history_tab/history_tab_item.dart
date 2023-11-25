@@ -55,9 +55,9 @@ class HistoryTabItemBody extends StatelessWidget {
             title: 'Address',
           ),
           spaceH4,
-          AppText(value.body, title: 'Body'),
-          spaceH4,
           AppText(value.subject, title: 'Subject'),
+          spaceH4,
+          AppText(value.body, title: 'Body'),
         ],
       ),
       phone: (value) => AppText(value.number, title: 'Phone'),
@@ -89,7 +89,7 @@ class HistoryTabItemBody extends StatelessWidget {
         children: [
           AppText(
             value.encryptionType.toString(),
-            title: 'Encryption type',
+            title: 'EncryptionType',
           ),
           spaceH4,
           AppText(value.ssid, title: 'Ssid'),
