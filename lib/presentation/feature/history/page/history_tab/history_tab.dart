@@ -65,7 +65,7 @@ class _HistoryTabState extends State<HistoryTab>
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             builderDelegate: PagedChildBuilderDelegate<AppScanData>(
               noItemsFoundIndicatorBuilder: (context) =>
-                  const HistoryTabNotFound(),
+                  const Center(child: HistoryTabNotFound()),
               animateTransitions: true,
               firstPageProgressIndicatorBuilder: (context) =>
                   const HistoryTabShimmer(),
@@ -73,7 +73,7 @@ class _HistoryTabState extends State<HistoryTab>
                   const HistoryTabShimmer(),
               itemBuilder: (context, item, index) {
                 return HistoryTabItem(
-                  scanData: item,
+                  data: item.data,
                 );
               },
             )),

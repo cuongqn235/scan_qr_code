@@ -28,7 +28,7 @@ class AppScanQrCodeBloc extends Bloc<AppScanQrCodeEvent, AppScanQrCodeState> {
   FutureOr<void> _onCaptureScanQrcode(
       CaptureScanQrcode event, Emitter<AppScanQrCodeState> emit) async {
     try {
-      AppQrCodeData? data;
+      late AppQrCodeData data;
       switch (event.data.type) {
         case BarcodeType.email:
           data = AppQrCodeData.email(
@@ -65,10 +65,6 @@ class AppScanQrCodeBloc extends Bloc<AppScanQrCodeEvent, AppScanQrCodeState> {
           );
           break;
         case BarcodeType.text:
-          data = AppQrCodeData.text(
-            text: event.data.displayValue,
-          );
-          break;
         case BarcodeType.unknown:
         case BarcodeType.contactInfo:
         case BarcodeType.isbn:
@@ -76,19 +72,16 @@ class AppScanQrCodeBloc extends Bloc<AppScanQrCodeEvent, AppScanQrCodeState> {
         case BarcodeType.geo:
         case BarcodeType.calendarEvent:
         case BarcodeType.driverLicense:
+          data = AppQrCodeData.text(
+            text: event.data.displayValue,
+          );
           break;
       }
-      if (data == null) {
-        emit(state.copyWith(
-          correctFormat: false,
-        ));
-      } else {
-        await addScanEntity(event.data.type, data);
-        emit(state.copyWith(
-          data: data,
-          correctFormat: true,
-        ));
-      }
+      await addScanEntity(event.data.type, data);
+      emit(state.copyWith(
+        data: data,
+        correctFormat: true,
+      ));
 
       emit(state.copyWith(
         isScanable: true,

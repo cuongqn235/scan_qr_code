@@ -47,10 +47,16 @@ class ScanEntity {
         break;
       case 'wifi':
         qrData = QrCodeDataEntity.wifi(
-          encryptionType:
-              qrDate[0].base64Decode.isNotEmpty ? int.parse(qrDate[0]) : null,
+          encryptionType: qrDate[0].base64Decode.isNotEmpty
+              ? int.parse(qrDate[0].base64Decode)
+              : null,
           ssid: qrDate[1].base64Decode,
           password: qrDate[2].base64Decode,
+        );
+        break;
+      default:
+        qrData = QrCodeDataEntity.text(
+          text: qrDate[0].base64Decode,
         );
         break;
     }

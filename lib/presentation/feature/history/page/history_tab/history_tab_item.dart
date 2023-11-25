@@ -1,13 +1,16 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:scan_qr_code/app/component/text/app_text.dart';
 import 'package:scan_qr_code/app/extensions/context.dart';
 import 'package:scan_qr_code/app/extensions/spaces.dart';
 import 'package:scan_qr_code/presentation/feature/scan_qr/models/app_qr_code_data.dart';
-import 'package:scan_qr_code/presentation/feature/scan_qr/models/app_scan_data.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HistoryTabItem extends StatelessWidget {
-  const HistoryTabItem({super.key, required this.scanData});
-  final AppScanData scanData;
+  const HistoryTabItem({super.key, required this.data});
+  final AppQrCodeData data;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,12 +27,12 @@ class HistoryTabItem extends StatelessWidget {
         children: [
           Expanded(
             child: HistoryTabItemBody(
-              data: scanData.data,
+              data: data,
             ),
           ),
           spaceW8,
           HistoryTabItemIcon(
-            data: scanData.data,
+            data: data,
           ),
         ],
       ),
@@ -43,31 +46,59 @@ class HistoryTabItemBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return data.map(
-        email: (value) => Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(value.address ?? 'Chưa có dữ liệu'),
-                spaceH4,
-                Text(value.body ?? 'Chưa có dữ liệu'),
-                spaceH4,
-                Text(value.subject ?? 'Chưa có dữ liệu'),
-              ],
-            ),
-        phone: (value) => const Icon(Icons.phone_enabled_outlined),
-        sms: (value) => const Icon(Icons.sms_outlined),
-        urlBookmark: (value) => Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(value.url,
-                    style: context.textTheme.bodyMedium?.copyWith(
-                      decoration: TextDecoration.underline,
-                    )),
-                spaceH4,
-                Text(value.title ?? 'Chưa có dữ liệu'),
-              ],
-            ),
-        wifi: (value) => const Icon(Icons.wifi_2_bar_outlined),
-        text: (value) => const SizedBox.shrink());
+      email: (value) => Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AppText(
+            value.address,
+            title: 'Address',
+          ),
+          spaceH4,
+          AppText(value.body, title: 'Body'),
+          spaceH4,
+          AppText(value.subject, title: 'Subject'),
+        ],
+      ),
+      phone: (value) => AppText(value.number, title: 'Phone'),
+      sms: (value) => Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AppText(value.phoneNumber, title: 'Phone'),
+          spaceH4,
+          AppText(value.message, title: 'Message'),
+        ],
+      ),
+      urlBookmark: (value) => Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AppText(value.url,
+              style: context.textTheme.bodyMedium?.copyWith(
+                decoration: TextDecoration.underline,
+              ),
+              title: 'Url'),
+          spaceH4,
+          AppText(value.title, title: 'Title'),
+        ],
+      ),
+      wifi: (value) => Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AppText(
+            value.encryptionType.toString(),
+            title: 'Encryption type',
+          ),
+          spaceH4,
+          AppText(value.ssid, title: 'Ssid'),
+          spaceH4,
+          AppText(value.password, title: 'Password'),
+        ],
+      ),
+      text: (value) => AppText(value.text, title: 'Text'),
+    );
   }
 }
 
@@ -77,11 +108,67 @@ class HistoryTabItemIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return data.map(
-        email: (value) => const Icon(Icons.email_outlined),
-        phone: (value) => const Icon(Icons.phone_enabled_outlined),
-        sms: (value) => const Icon(Icons.sms_outlined),
-        urlBookmark: (value) => const Icon(Icons.link),
-        wifi: (value) => const Icon(Icons.wifi_2_bar_outlined),
-        text: (value) => const SizedBox.shrink());
+        email: (value) => IconButton(
+              onPressed: () async {
+                final url = Uri(
+                  scheme: 'mailto',
+                  path: '${value.address}',
+                  query: 'subject=${value.subject}&body=${value.body}',
+                );
+                if (await canLaunchUrl(url)) {
+                  await launchUrl(url);
+                }
+              },
+              icon: const Icon(
+                Icons.email_outlined,
+              ),
+            ),
+        phone: (value) => IconButton(
+            onPressed: () async {
+              final Uri launchUri = Uri(
+                scheme: 'tel',
+                path: value.number,
+              );
+              await launchUrl(launchUri);
+            },
+            icon: const Icon(Icons.phone_enabled_outlined)),
+        sms: (value) => IconButton(
+            onPressed: () async {
+              final uri = Uri(
+                scheme: 'sms',
+                path: value.phoneNumber,
+                query: 'body=${value.message}',
+              );
+
+              if (await canLaunchUrl(uri)) {
+                await launchUrl(uri);
+              }
+            },
+            icon: const Icon(Icons.sms_outlined)),
+        urlBookmark: (value) => IconButton(
+              onPressed: () {
+                launchUrl(
+                  Uri.parse(value.url),
+                );
+              },
+              icon: const Icon(Icons.link),
+            ),
+        wifi: (value) => IconButton(
+            onPressed: () {}, icon: const Icon(Icons.wifi_2_bar_outlined)),
+        text: (value) => IconButton(
+              onPressed: () {
+                if ((value.text ?? '').isNotEmpty) {
+                  Clipboard.setData(ClipboardData(text: value.text!)).then((_) {
+                    Fluttertoast.showToast(
+                      msg: value.text!,
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
+                  });
+                }
+              },
+              icon: const Icon(
+                Icons.text_snippet_rounded,
+              ),
+            ));
   }
 }

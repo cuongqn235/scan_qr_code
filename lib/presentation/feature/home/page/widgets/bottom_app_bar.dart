@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:scan_qr_code/app/component/icon_animation.dart';
 import 'package:scan_qr_code/app/extensions/context.dart';
 import 'package:scan_qr_code/presentation/feature/home/page/widgets/qr_code_dialog.dart';
@@ -42,16 +43,24 @@ class AppBottomAppBar extends StatelessWidget {
                     vertical: 8.h,
                     horizontal: 8.w,
                   ),
-                  child: const Align(
+                  child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Column(
-                      // crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(Icons.qr_code_2_outlined),
-                        Text(
-                          'Generate',
-                        ),
-                      ],
+                    child: InkWell(
+                      onTap: () {
+                        Fluttertoast.showToast(
+                          msg: 'Coming soon',
+                          toastLength: Toast.LENGTH_SHORT,
+                        );
+                      },
+                      child: const Column(
+                        // crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(Icons.qr_code_2_outlined),
+                          Text(
+                            'Generate',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

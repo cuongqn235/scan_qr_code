@@ -33,6 +33,7 @@ class HistoryTabBloc extends Bloc<HistoryTabEvent, HistoryTabState> {
           ),
         );
       }
+      await Future.delayed(const Duration(milliseconds: 200));
       final res = await _getAllJokeUseCase.execute(
         state.isAdmin,
       );
