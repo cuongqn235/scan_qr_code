@@ -3,7 +3,7 @@
     "tasks": [
         {
             "type": "flutter",
-            "command": "flutter",
+            "command": "fvm flutter",
             "args": [
                 "build",
                 "appbundle",
@@ -20,7 +20,7 @@
         },
         {
             "type": "flutter",
-            "command": "flutter",
+            "command": "fvm flutter",
             "args": [
                 "build",
                 "appbundle",

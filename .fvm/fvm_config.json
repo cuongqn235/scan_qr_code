@@ -1,0 +1,19 @@
+{
+  "flutterSdkVersion": "3.16.0",
+  "flavors": {
+    "dev": {
+      "name": "dev",
+      "displayName": "Development",
+      "android": {
+        "applicationId": "com.cnt.scanQrCode.dev"
+      }
+    },
+    "prod": {
+      "name": "prod",
+      "displayName": "Production",
+      "android": {
+        "applicationId": "com.cnt.scanQrCode.prod"
+      }
+    }
+  }
+}
