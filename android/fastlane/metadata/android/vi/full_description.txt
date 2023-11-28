@@ -1,0 +1,5 @@
+Ứng dụng quét mã QR code và lưu lại lịch sử đã quét là một ứng dụng tiện ích giúp người dùng dễ dàng quét mã QR code và xem lại lịch sử các mã QR code đã quét. Ứng dụng có các tính năng chính sau:
+
+Quét mã QR code: Ứng dụng có thể quét tất cả các loại mã QR code, bao gồm mã QR code chứa URL, thông tin liên hệ, v.v.
+Lưu lại lịch sử: Ứng dụng sẽ lưu lại lịch sử các mã QR code đã quét, bao gồm nội dung mã QR code, thời gian quét, vị trí quét.
+Xem lại lịch sử: Người dùng có thể dễ dàng xem lại lịch sử các mã QR code đã quét.

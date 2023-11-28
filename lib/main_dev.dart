@@ -1,8 +1,10 @@
 ﻿import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:scan_qr_code/app/inject_dependency/inject_dependency.dart';
+import 'package:scan_qr_code/firebase_options_dev.dart';
 import 'package:scan_qr_code/presentation/app.dart';
 
 void main() async {
@@ -12,6 +14,9 @@ void main() async {
     ScreenUtil.ensureScreenSize(),
     EasyLocalization.ensureInitialized(),
   ]);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle.dark.copyWith(
       statusBarColor: Colors.transparent,

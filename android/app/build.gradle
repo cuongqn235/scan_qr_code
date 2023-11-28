@@ -51,7 +51,7 @@ android {
         applicationId "com.cnt.scanQrCode"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -63,13 +63,13 @@ android {
     productFlavors {
         prod {
             dimension "version"
-            resValue "string", "app_name", "QR Scan Pro - Quét mọi mã"
+            resValue "string", "app_name", "QR Code Scanner - Quét mọi mã"
             applicationIdSuffix ".prod"
         }
 
         dev {
             dimension "version"
-            resValue "string", "app_name", "QR Scan Pro - Quét mọi mã(Dev)"
+            resValue "string", "app_name", "QR Code Scanner - Quét mọi mã(Dev)"
             applicationIdSuffix ".dev"
         }
     }

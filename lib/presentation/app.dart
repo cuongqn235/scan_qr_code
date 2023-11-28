@@ -98,7 +98,7 @@ class __MyAppState extends State<_MyApp> {
         ),
       ],
       child: MaterialApp.router(
-        title: 'Flutter Demo',
+        title: 'QR Code Scanner',
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.system,
         theme: AppTheme.lightTheme(context),

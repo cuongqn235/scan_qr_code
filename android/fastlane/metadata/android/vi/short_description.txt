@@ -1,0 +1,1 @@
+Ứng dụng giúp người dùng dễ dàng quét mã QR code và xem lại lịch sử các đã quét.

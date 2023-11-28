@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+3
+version: 1.0.0+4
 
 #linting script for running
 scripts:
@@ -26,7 +26,8 @@ scripts:
    setIcon: "fvm flutter pub get && dart run flutter_launcher_icons"
    build:
     aabp: "fvm flutter clean && fvm flutter pub get && fvm flutter build appbundle --verbose --release --flavor prod -t lib/main_prod.dart"
-    apkp: "fvm flutter clean && fvm flutter pub get && fvm flutter build apk --verbose --release --flavor prod -t lib/main_prod.dart"
+    # apkp: "fvm flutter clean && fvm flutter pub get && fvm flutter build apk --verbose --release --flavor prod -t lib/main_prod.dart"
+    apkp: "cd android && bundle exec fastlane betaprod"
     apkd: "fvm flutter clean && fvm flutter pub get && fvm flutter build apk --verbose --release --flavor dev -t lib/main_dev.dart"
 
 environment:
@@ -82,8 +83,9 @@ dependencies:
   loader_overlay: ^3.0.0
   shimmer: ^3.0.0
   flutter_svg: ^2.0.9
-  mobile_scanner: ^3.5.2
+  mobile_scanner: ^3.5.5
   easy_localization: ^3.0.3
+  firebase_core: ^2.23.0
 
 dev_dependencies:
   injectable_generator:

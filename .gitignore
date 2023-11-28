@@ -47,3 +47,7 @@ lib/app/inject_dependency/inject_dependency.config.dart
 *.g.dart 
 *.freezed.dart
 .fvm/flutter_sdk
+
+linux
+windows
+macos
