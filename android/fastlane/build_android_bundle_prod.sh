@@ -1,1 +1,1 @@
-fvm flutter clean && fvm flutter pub get && fvm flutter build appbundle --verbose --release --flavor prod -t lib/main_prod.dart
+fvm flutter build appbundle --verbose --release --flavor prod -t lib/main_prod.dart

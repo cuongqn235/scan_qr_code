@@ -51,3 +51,5 @@ lib/app/inject_dependency/inject_dependency.config.dart
 linux
 windows
 macos
+android/fastlane/report.xml
+android/fastlane/README.md

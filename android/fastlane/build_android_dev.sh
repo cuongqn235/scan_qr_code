@@ -1,1 +1,1 @@
-fvm flutter clean && fvm flutter pub get && fvm flutter build apk --verbose --release --flavor dev -t lib/main_dev.dart
+fvm flutter build apk --verbose --release --flavor dev -t lib/main_dev.dart

@@ -28,7 +28,7 @@ scripts:
     aabp: "fvm flutter clean && fvm flutter pub get && fvm flutter build appbundle --verbose --release --flavor prod -t lib/main_prod.dart"
     # apkp: "fvm flutter clean && fvm flutter pub get && fvm flutter build apk --verbose --release --flavor prod -t lib/main_prod.dart"
     apkp: "cd android && bundle exec fastlane betaprod"
-    apkd: "fvm flutter clean && fvm flutter pub get && fvm flutter build apk --verbose --release --flavor dev -t lib/main_dev.dart"
+    apkd: "cd android && bundle exec fastlane betadev"
 
 environment:
   sdk: '>=3.1.4 <4.0.0'
