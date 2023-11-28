@@ -33,7 +33,7 @@ platform :android do
     # )
     # increment_build_number({ build_number: latest_release[:buildVersion].to_i + 1 })
     release = firebase_app_distribution(
-            app: "1:996911916116:android:726f7136acf8f3043379c1",
+            app: "1:996911916116:android:23b3bd12d36a844b3379c1",
             groups: "QRCodeScanner-tester",
             release_notes: "Fixing bug in features",
             apk_path: "../build/app/outputs/flutter-apk/app-prod-release.apk",
@@ -53,7 +53,7 @@ platform :android do
     # )
     # increment_build_number({ build_number: latest_release[:buildVersion].to_i + 1 })
     release = firebase_app_distribution(
-            app: "1:230866415418:android:ba972ed8e8709a8f3a6a03",
+            app: "1:230866415418:android:0fb3e831ca60849c3a6a03",
             groups: "QRCodeScanner-tester",
             release_notes: "Fixing bug in features",
             apk_path: "../build/app/outputs/flutter-apk/app-dev-release.apk",

@@ -35,6 +35,7 @@ class AppNavigatorImpl implements AppNavigator {
   @override
   Future<AppQrCodeData?> pushScanQrcode(AppScanQrCodeParams params) async {
     final res = await context.push<AppQrCodeData?>(
+      // '${AppRoutes.home.path}/${AppRoutes.scanQrCode.path}',
       AppRoutes.scanQrCode.path,
       extra: params,
     );
@@ -44,6 +45,7 @@ class AppNavigatorImpl implements AppNavigator {
   @override
   void pushHistory() {
     context.push(
+      // '${AppRoutes.home.path}/${AppRoutes.history.path}',
       AppRoutes.history.path,
     );
   }

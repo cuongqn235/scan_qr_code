@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for linux - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for linux - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,19 +49,9 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyA3y63WWPaqC3pMH2DDsnSl6AblFm5J7lY',
-    appId: '1:996911916116:web:7df303357054726f3379c1',
-    messagingSenderId: '996911916116',
-    projectId: 'qr-code-scanner-4661e',
-    authDomain: 'qr-code-scanner-4661e.firebaseapp.com',
-    storageBucket: 'qr-code-scanner-4661e.appspot.com',
-    measurementId: 'G-MKJXD5PG9Z',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD1zdTqTEBIF96YlhogYvUM4JYlhWMt_w',
-    appId: '1:996911916116:android:726f7136acf8f3043379c1',
+    apiKey: 'AIzaSyD1zdTqTEBIF96YlhogYvUM4JYlhWMt_w4',
+    appId: '1:996911916116:android:23b3bd12d36a844b3379c1',
     messagingSenderId: '996911916116',
     projectId: 'qr-code-scanner-4661e',
     storageBucket: 'qr-code-scanner-4661e.appspot.com',
@@ -63,19 +59,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDplAlANJtMIKvVKE21doULTFCOx84gDcA',
-    appId: '1:996911916116:ios:910750a6ee6b7e943379c1',
+    appId: '1:996911916116:ios:959b006767e26e0f3379c1',
     messagingSenderId: '996911916116',
     projectId: 'qr-code-scanner-4661e',
     storageBucket: 'qr-code-scanner-4661e.appspot.com',
-    iosBundleId: 'com.example.scanQrCode',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDplAlANJtMIKvVKE21doULTFCOx84gDcA',
-    appId: '1:996911916116:ios:a1efb10abab38f2e3379c1',
-    messagingSenderId: '996911916116',
-    projectId: 'qr-code-scanner-4661e',
-    storageBucket: 'qr-code-scanner-4661e.appspot.com',
-    iosBundleId: 'com.example.scanQrCode.RunnerTests',
+    iosBundleId: 'com.cnt.scanQrCode.prod',
   );
 }

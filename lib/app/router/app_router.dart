@@ -28,7 +28,7 @@ class AppRouter {
   }) {
     return GoRouter(
       debugLogDiagnostics: kDebugMode,
-      initialLocation: '/',
+      initialLocation: AppRoutes.home.path,
       errorBuilder: (context, state) {
         if (kDebugMode) {
           print(state.error);
@@ -38,16 +38,32 @@ class AppRouter {
       refreshListenable: GoRouterRefreshStream(
           redirectController.stream.merge([...(streams ?? [])])),
       redirect: (context, state) async {
+        //Step1
+        // final isFirstLaunch = context.read<AppBloc>().state.isFirstLaunch;
+        // if (isFirstLaunch == true) {
+        //   return AppRoutes.onBoard.path;
+        // }
+        // // // return null;
+        // if (state.matchedLocation.compareTo('/') != 0 &&
+        //     state.matchedLocation.compareTo(AppRoutes.onBoard.path) != 0) {
+        //   return state.fullPath;
+        // }
+        // return AppRoutes.home.path;
+        //Step2
         final isFirstLaunch = context.read<AppBloc>().state.isFirstLaunch;
+        final bool loggingIn = state.matchedLocation == AppRoutes.onBoard.path;
         if (isFirstLaunch == true) {
           return AppRoutes.onBoard.path;
         }
-        // return null;
-        if (state.matchedLocation.compareTo('/') != 0 &&
-            state.matchedLocation.compareTo(AppRoutes.onBoard.path) != 0) {
-          return state.fullPath;
+
+        // if the user is logged in but still on the login page, send them to
+        // the home page
+        if (loggingIn) {
+          return AppRoutes.home.path;
         }
-        return AppRoutes.home.path;
+
+        // no need to redirect at all
+        return null;
       },
       routes: <RouteBase>[
         GoRoute(
@@ -62,42 +78,52 @@ class AppRouter {
           },
         ),
         GoRoute(
-          name: AppRoutes.home.name,
-          path: AppRoutes.home.path,
-          pageBuilder: (context, state) {
-            return AppPage.animatedPage(
-              context,
-              state,
-              BasePage<HomeBloc, HomeState>(page: const HomePage()),
-            );
-          },
-        ),
-        GoRoute(
-          name: AppRoutes.scanQrCode.name,
-          path: AppRoutes.scanQrCode.path,
-          pageBuilder: (context, state) {
-            final params = state.extra as AppScanQrCodeParams;
-            return AppPage.animatedPage(
-              context,
-              state,
-              BasePage<AppScanQrCodeBloc, AppScanQrCodeState>(
-                  page: AppScanQrCodePage(
-                params: params,
-              )),
-            );
-          },
-        ),
-        GoRoute(
-          name: AppRoutes.history.name,
-          path: AppRoutes.history.path,
-          pageBuilder: (context, state) {
-            return AppPage.animatedPage(
-              context,
-              state,
-              BasePage<HistoryBloc, HistoryState>(page: const HistoryPage()),
-            );
-          },
-        ),
+            name: AppRoutes.home.name,
+            path: AppRoutes.home.path,
+            pageBuilder: (context, state) {
+              return AppPage.animatedPage(
+                context,
+                state,
+                BasePage<HomeBloc, HomeState>(page: const HomePage()),
+              );
+            },
+            redirect: (context, state) async {
+              final nextPath = state.fullPath;
+              final thisPath = state.matchedLocation;
+              if (nextPath != thisPath) {
+                return nextPath;
+              }
+              return state.matchedLocation;
+            },
+            routes: [
+              GoRoute(
+                name: AppRoutes.scanQrCode.name,
+                path: AppRoutes.scanQrCode.path,
+                pageBuilder: (context, state) {
+                  final params = state.extra as AppScanQrCodeParams;
+                  return AppPage.animatedPage(
+                    context,
+                    state,
+                    BasePage<AppScanQrCodeBloc, AppScanQrCodeState>(
+                        page: AppScanQrCodePage(
+                      params: params,
+                    )),
+                  );
+                },
+              ),
+              GoRoute(
+                name: AppRoutes.history.name,
+                path: AppRoutes.history.path,
+                pageBuilder: (context, state) {
+                  return AppPage.animatedPage(
+                    context,
+                    state,
+                    BasePage<HistoryBloc, HistoryState>(
+                        page: const HistoryPage()),
+                  );
+                },
+              ),
+            ]),
       ],
     );
   }
