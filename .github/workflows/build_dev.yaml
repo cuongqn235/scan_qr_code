@@ -4,12 +4,12 @@ on:
     branches:
       - develop
 jobs:
-  run:
+  build-apk:
     runs-on: macos-latest
+    - uses: actions/checkout@v3
     - uses: subosito/flutter-action@v2
       with:
         flutter-version: '3.16.0'
         channel: 'stable'
     steps:
-      - run: cd android
-      - run: bundle exec fastlane betadev
+      - run: cd android && bundle exec fastlane betadev
