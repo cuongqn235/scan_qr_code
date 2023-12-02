@@ -32,13 +32,13 @@ platform :android do
     #   firebase_cli_token: "1//0eXWxmSvCFfaZCgYIARAAGA4SNwF-L9IrANWO7VgzUFyYd3oIhxLrdhFAJkhzApWZxbCK9MXEBsKsv3KelHxIHxkpOoUEB_G9RLA",
     # )
     # increment_build_number({ build_number: latest_release[:buildVersion].to_i + 1 })
-    release = firebase_app_distribution(
-            app: "1:996911916116:android:23b3bd12d36a844b3379c1",
-            groups: "QRCodeScanner-tester",
-            release_notes: "Fixing bug in features",
-            apk_path: "../build/app/outputs/flutter-apk/app-prod-release.apk",
-            firebase_cli_token: "1//0eXWxmSvCFfaZCgYIARAAGA4SNwF-L9IrANWO7VgzUFyYd3oIhxLrdhFAJkhzApWZxbCK9MXEBsKsv3KelHxIHxkpOoUEB_G9RLA"
-        )
+    # release = firebase_app_distribution(
+    #         app: "1:996911916116:android:23b3bd12d36a844b3379c1",
+    #         groups: "QRCodeScanner-tester",
+    #         release_notes: "Fixing bug in features",
+    #         apk_path: "../build/app/outputs/flutter-apk/app-prod-release.apk",
+    #         firebase_cli_token: "1//0eXWxmSvCFfaZCgYIARAAGA4SNwF-L9IrANWO7VgzUFyYd3oIhxLrdhFAJkhzApWZxbCK9MXEBsKsv3KelHxIHxkpOoUEB_G9RLA"
+    #     )
   end
 
   desc "Submit a new Beta Dev Build to Crashlytics Beta"
@@ -52,13 +52,13 @@ platform :android do
     #   firebase_cli_token: "1//0eXWxmSvCFfaZCgYIARAAGA4SNwF-L9IrANWO7VgzUFyYd3oIhxLrdhFAJkhzApWZxbCK9MXEBsKsv3KelHxIHxkpOoUEB_G9RLA",
     # )
     # increment_build_number({ build_number: latest_release[:buildVersion].to_i + 1 })
-    release = firebase_app_distribution(
-            app: "1:230866415418:android:0fb3e831ca60849c3a6a03",
-            groups: "QRCodeScanner-tester",
-            release_notes: "Fixing bug in features",
-            apk_path: "../build/app/outputs/flutter-apk/app-dev-release.apk",
-            firebase_cli_token: "1//0eXWxmSvCFfaZCgYIARAAGA4SNwF-L9IrANWO7VgzUFyYd3oIhxLrdhFAJkhzApWZxbCK9MXEBsKsv3KelHxIHxkpOoUEB_G9RLA"
-        )
+    # release = firebase_app_distribution(
+    #         app: "1:230866415418:android:0fb3e831ca60849c3a6a03",
+    #         groups: "QRCodeScanner-tester",
+    #         release_notes: "Fixing bug in features",
+    #         apk_path: "../build/app/outputs/flutter-apk/app-dev-release.apk",
+    #         firebase_cli_token: "1//0eXWxmSvCFfaZCgYIARAAGA4SNwF-L9IrANWO7VgzUFyYd3oIhxLrdhFAJkhzApWZxbCK9MXEBsKsv3KelHxIHxkpOoUEB_G9RLA"
+    #     )
   end
 
   desc "Deploy a new version to the Google Play"

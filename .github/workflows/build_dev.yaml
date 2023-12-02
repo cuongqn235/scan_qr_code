@@ -1,0 +1,10 @@
+﻿name: build apk dev
+on:
+  push:
+    branches:
+      - develop
+jobs:
+  run:
+    runs-on: macos-latest
+    steps:
+      - run: rps build apkp
