@@ -22,9 +22,9 @@ jobs:
           ruby-version: "3.1" # Not needed with a .ruby-version file
 
       - name: Install Bundler
-        working-directory: android
-        run: |
-          bundle install && gem install fastlane && bundle exec fastlane betadev
+        working-directory: ./android
+        run: bundle install && gem install fastlane && bundle exec fastlane betadev
+        # run: echo ${{ github.workspace }}
 
       # - name: Install Fastlane
       #   working-directory: android
