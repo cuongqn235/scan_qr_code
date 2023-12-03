@@ -23,7 +23,15 @@ jobs:
 
       - name: Install Bundler
         working-directory: ./android
-        run: bundle install && gem install fastlane && bundle exec fastlane betadev
+        run: bundle install
+
+      - name: Install fastlane
+        run: gem install fastlane
+
+      - name: Install Bundler
+        working-directory: ./android
+        run: fastlane betadev
+
         # run: echo ${{ github.workspace }}
 
       # - name: Install Fastlane
