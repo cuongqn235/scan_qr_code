@@ -23,14 +23,15 @@ jobs:
 
       - name: Install Bundler
         working-directory: android
-        run: bundle install
-
-      - name: Install Fastlane
-        working-directory: android
         run: |
-          gem install fastlane
+          bundle install && gem install fastlane && bundle exec fastlane betadev
 
-      - name: Build Beta APK
-        working-directory: android
-        run: |
-          bundle exec fastlane betadev
+      # - name: Install Fastlane
+      #   working-directory: android
+      #   run: |
+      #     gem install fastlane
+
+      # - name: Build Beta APK
+      #   working-directory: android
+      #   run: |
+      #     bundle exec fastlane betadev
