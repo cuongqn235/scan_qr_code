@@ -21,12 +21,11 @@ jobs:
         with:
           ruby-version: "3.1" # Not needed with a .ruby-version file
 
-      - run: bundle install
-      - run: bundle exec rake
+      - run: cd android && bundle install && cd ..
 
       - name: Install Fastlane
         run: |
-          gem install fastlane
+          cd android && gem install fastlane && cd ..
 
       - name: Build Beta APK
         working-directory: android
