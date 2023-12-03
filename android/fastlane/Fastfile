@@ -44,7 +44,8 @@ platform :android do
   desc "Submit a new Beta Dev Build to Crashlytics Beta"
   lane :betadev do
     gradle(
-      task: "clean"
+      task: "clean",
+      project_dir: "./android"
     ) 
     sh("./build_android_dev.sh")
     # latest_release = firebase_app_distribution_get_latest_release(
