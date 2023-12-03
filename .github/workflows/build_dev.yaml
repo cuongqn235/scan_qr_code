@@ -16,6 +16,9 @@ jobs:
         with:
           distribution: "temurin" # See 'Supported distributions' for available options
           java-version: "17"
+      - name: Install gems
+        run: |
+          sudo bundle install
 
       - name: Install Fastlane
         run: |
