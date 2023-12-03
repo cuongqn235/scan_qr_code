@@ -24,10 +24,11 @@ jobs:
       - run: cd android && bundle install && cd ..
 
       - name: Install Fastlane
+        working-directory: android
         run: |
-          cd android && gem install fastlane && cd ..
+          gem install fastlane
 
       - name: Build Beta APK
-        # working-directory: android
+        working-directory: android
         run: |
-          cd android && bundle exec fastlane betadev && cd ..
+          bundle exec fastlane betadev
