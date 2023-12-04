@@ -1,7 +1,7 @@
 {
   "file_generated_by": "FlutterFire CLI",
   "purpose": "FirebaseAppID & ProjectID for this Firebase app in this directory",
-  "GOOGLE_APP_ID": "1:230866415418:ios:97f93f6ed27d93293a6a03",
-  "FIREBASE_PROJECT_ID": "qr-code-scanner-dev",
-  "GCM_SENDER_ID": "230866415418"
+  "GOOGLE_APP_ID": "1:441789829721:ios:7e0c469d3ef58aa7f09748",
+  "FIREBASE_PROJECT_ID": "qr-code-scanner-prod",
+  "GCM_SENDER_ID": "441789829721"
 }

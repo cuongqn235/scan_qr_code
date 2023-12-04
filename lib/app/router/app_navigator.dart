@@ -5,10 +5,11 @@ import 'package:scan_qr_code/presentation/feature/scan_qr/models/app_scan_qr_cod
 import 'package:scan_qr_code/presentation/feature/scan_qr/models/app_qr_code_data.dart';
 
 abstract class AppNavigator {
-  void pushOnBoard();
-  void pushHome();
+  Future<void> pushOnBoard();
+  Future<void> pushHome();
   Future<AppQrCodeData?> pushScanQrcode(AppScanQrCodeParams params);
-  void pushHistory();
+  Future<void> pushHistory();
+  Future<void> pushGenerate();
 }
 
 class AppNavigatorImpl implements AppNavigator {
@@ -17,16 +18,16 @@ class AppNavigatorImpl implements AppNavigator {
   AppNavigatorImpl(this.context);
 
   @override
-  void pushOnBoard() {
-    context.push(
+  Future<void> pushOnBoard() {
+    return context.push(
       AppRoutes.onBoard.path,
       // extra: args,
     );
   }
 
   @override
-  void pushHome() {
-    context.push(
+  Future<void> pushHome() {
+    return context.push(
       AppRoutes.home.path,
       // extra: args,
     );
@@ -35,18 +36,25 @@ class AppNavigatorImpl implements AppNavigator {
   @override
   Future<AppQrCodeData?> pushScanQrcode(AppScanQrCodeParams params) async {
     final res = await context.push<AppQrCodeData?>(
-      // '${AppRoutes.home.path}/${AppRoutes.scanQrCode.path}',
-      AppRoutes.scanQrCode.path,
+      '${AppRoutes.home.path}/${AppRoutes.scanQrCode.path}',
+      // AppRoutes.scanQrCode.path,
       extra: params,
     );
     return res;
   }
 
   @override
-  void pushHistory() {
-    context.push(
-      // '${AppRoutes.home.path}/${AppRoutes.history.path}',
-      AppRoutes.history.path,
+  Future<void> pushHistory() {
+    return context.push(
+      '${AppRoutes.home.path}/${AppRoutes.history.path}',
+      // AppRoutes.history.path,
+    );
+  }
+
+  @override
+  Future<void> pushGenerate() {
+    return context.push(
+      '${AppRoutes.home.path}/${AppRoutes.generate.path}',
     );
   }
 }

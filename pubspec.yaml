@@ -75,6 +75,7 @@ dependencies:
   permission_handler: ^11.0.1
   flutter_native_splash: ^2.3.5
   dartz: ^0.10.1
+  logger: ^2.0.2+1
 
   #UI
   flutter_screenutil: ^5.9.0

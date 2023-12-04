@@ -1,7 +1,6 @@
 ﻿import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:scan_qr_code/app/component/icon_animation.dart';
 import 'package:scan_qr_code/app/extensions/context.dart';
 import 'package:scan_qr_code/presentation/feature/home/page/widgets/qr_code_dialog.dart';
@@ -48,10 +47,7 @@ class AppBottomAppBar extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: InkWell(
                       onTap: () {
-                        Fluttertoast.showToast(
-                          msg: 'ComingSoon'.tr(),
-                          toastLength: Toast.LENGTH_SHORT,
-                        );
+                        context.navigator.pushGenerate();
                       },
                       child: Column(
                         children: [

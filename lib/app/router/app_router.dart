@@ -11,6 +11,8 @@ import 'package:scan_qr_code/app/router/app_routes.dart';
 import 'package:scan_qr_code/app/router/go_router_refresh_stream.dart';
 import 'package:scan_qr_code/presentation/bloc/app_bloc.dart';
 import 'package:scan_qr_code/presentation/feature/error/error_page.dart';
+import 'package:scan_qr_code/presentation/feature/generate/bloc/generate_bloc.dart';
+import 'package:scan_qr_code/presentation/feature/generate/page/generate_page.dart';
 import 'package:scan_qr_code/presentation/feature/history/bloc/history_bloc.dart';
 import 'package:scan_qr_code/presentation/feature/history/page/history_page.dart';
 import 'package:scan_qr_code/presentation/feature/home/bloc/home_bloc.dart';
@@ -120,6 +122,18 @@ class AppRouter {
                     state,
                     BasePage<HistoryBloc, HistoryState>(
                         page: const HistoryPage()),
+                  );
+                },
+              ),
+              GoRoute(
+                name: AppRoutes.generate.name,
+                path: AppRoutes.generate.path,
+                pageBuilder: (context, state) {
+                  return AppPage.animatedPage(
+                    context,
+                    state,
+                    BasePage<GenerateBloc, GenerateState>(
+                        page: const GeneratePage()),
                   );
                 },
               ),

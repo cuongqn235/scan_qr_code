@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:scan_qr_code/app/component/icon_animation.dart';
 import 'package:scan_qr_code/app/inject_dependency/inject_dependency.dart';
 import 'package:scan_qr_code/presentation/feature/home/bloc/home_bloc.dart';
-import 'package:scan_qr_code/presentation/feature/home/page/widgets/bottom_app_bar.dart';
+import 'package:scan_qr_code/presentation/feature/home/page/widgets/app_bottom_app_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({

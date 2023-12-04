@@ -9,11 +9,15 @@
   ),
   scanQrCode(
     name: 'scanQrCode',
-    path: '/home/scanQrCode',
+    path: 'scanQrCode',
   ),
   history(
     name: 'history',
-    path: '/home/history',
+    path: 'history',
+  ),
+  generate(
+    name: 'generate',
+    path: 'generate',
   );
 
   const AppRoutes({

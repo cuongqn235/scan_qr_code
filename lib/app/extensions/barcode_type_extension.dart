@@ -58,4 +58,23 @@ extension BarcodeTypeExtension on BarcodeType {
         return Assets.icons.icText;
     }
   }
+
+  String get title {
+    switch (this) {
+      case BarcodeType.email:
+        return 'email';
+      case BarcodeType.phone:
+        return 'phone';
+      case BarcodeType.sms:
+        return 'sms';
+      case BarcodeType.url:
+        return 'url';
+      case BarcodeType.wifi:
+        return 'wifi';
+      case BarcodeType.text:
+        return 'text';
+      default:
+        return 'text';
+    }
+  }
 }
